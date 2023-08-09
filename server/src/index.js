@@ -1,6 +1,8 @@
 const { ApolloServer } = require("@apollo/server");
 const { startStandaloneServer } = require("@apollo/server/standalone");
-const typeDefs = require("./schema");
+const typeDefs = require("./typeDefs.js");
+const resolvers = require("./resolvers.js");
+
 const mongoose = require("mongoose");
 
 const MONGODB_URI =
@@ -11,16 +13,16 @@ mongoose
   .then(() => console.log("Database is connected"))
   .catch((err) => console.error(err));
 
-// async function startApolloServer() {
-//   const server = new ApolloServer({
-//     typeDefs,
-//     resolvers,
-//   });
-//   const { url } = await startStandaloneServer(server);
-//   console.log(`
-//       🚀  Server is running!
-//       📭  Query at ${url}
-//     `);
-// }
+async function startApolloServer() {
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+  });
+  const { url } = await startStandaloneServer(server);
+  console.log(`
+      🚀  Server is running!
+      📭  Query at ${url}
+    `);
+}
 
-// startApolloServer();
+startApolloServer();
