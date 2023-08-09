@@ -1,9 +1,8 @@
-const { ApolloServer } = require("@apollo/server");
-const { startStandaloneServer } = require("@apollo/server/standalone");
-const typeDefs = require("./typeDefs.js");
-const resolvers = require("./resolvers.js");
-
-const mongoose = require("mongoose");
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from "@apollo/server/standalone";
+import typeDefs from "./typeDefs.js";
+import resolvers from "./resolvers.js";
+import mongoose from "mongoose";
 
 const MONGODB_URI =
   "mongodb+srv://bbabucarr32:ye0QDgQQm8bXk7KL@todoappcluster.rbh3qeu.mongodb.net/?retryWrites=true&w=majority";

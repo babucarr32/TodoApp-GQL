@@ -1,25 +1,26 @@
-module.exports = `#graphql 
-type Recipe{
+const typeDefs = `#graphql 
+type Todo{
     name: String,
   description: String,
   createdAt: String,
-  thumbsUp: Int,
-  thumbsDown: Int,
+  completed: Boolean,
 }
 
-input RecipeInput{
+input TodoInput{
     name: String
     description: String
 }
 
 type Query{
-    recipe(ID: ID!): Recipe!
-    getRecipes(amount: Int): [Recipe]
+    todo(ID: ID!): Todo!
+    getTodos(amount: Int): [Todo]
 }
 
 type Mutation{
-    createRecipe(recipeInput: RecipeInput): Recipe!
-    deleteRecipe(ID: ID!): Boolean
-    editRecipe(ID: ID!, recipeInput: RecipeInput): Boolean
+    createTodo(todoInput: TodoInput): Todo!
+    deleteTodo(ID: ID!): Boolean
+    editTodo(ID: ID!, todoInput: TodoInput): Boolean
 }
 `;
+
+export default typeDefs;
