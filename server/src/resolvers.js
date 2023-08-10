@@ -1,7 +1,12 @@
 import Todo from "./model/Todo.js";
+import User from "./model/User.js";
 
 const resolvers = {
   Query: {
+    async user(_, { ID }) {
+      return await User.findById(ID);
+    },
+
     async todo(_, { ID }) {
       return await Todo.findById(ID);
     },
@@ -11,6 +16,19 @@ const resolvers = {
     },
   },
   Mutation: {
+    async createUser(_, { userInput: { fullName, email, password } }) {
+      const createUser = new User({
+        fullName: fullName,
+        email: email,
+        password: password,
+      });
+      const res = await createUser.save();
+      return {
+        id: res.id,
+        ...res._doc,
+      };
+    },
+
     async createTodo(_, { TodoInput: { name, description } }) {
       const createTodo = new Todo({
         name: name,

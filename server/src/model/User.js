@@ -1,15 +1,16 @@
-import mongoose, { model, Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const userSchema = new Schema({
-  username: String,
+  fullName: String,
+  email: String,
   password: String,
 });
 
-let UserModel;
+let User;
 try {
-  UserModel = mongoose.model("users");
+  User = mongoose.model("users");
 } catch (e) {
-  UserModel = mongoose.model("users", userSchema);
+  User = mongoose.model("users", userSchema);
 }
 
-export { UserModel };
+export default User;
