@@ -16,17 +16,22 @@ const resolvers = {
     },
   },
   Mutation: {
-    async createUser(_, { userInput: { fullName, email, password } }) {
-      const createUser = new User({
-        fullName: fullName,
-        email: email,
-        password: password,
-      });
-      const res = await createUser.save();
-      return {
-        id: res.id,
-        ...res._doc,
-      };
+    async createUser(
+      _,
+      { userInput: { fullName, email, password, rePassword } }
+    ) {
+      if (password === rePassword) {
+        const createUser = new User({
+          fullName,
+          email,
+          password,
+        });
+        const res = await createUser.save();
+        return {
+          message: "Created Account successfully.",
+        };
+      }
+      return { message: "The passwords do not match." };
     },
 
     async createTodo(_, { TodoInput: { name, description } }) {

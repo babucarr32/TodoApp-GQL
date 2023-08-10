@@ -1,15 +1,15 @@
 const typeDefs = `#graphql 
 "Defining user types"
 type User{
-    fullName: String
-    email: String
+    fullName: String!
+    email: String!
     password: String!
+    rePassword: String!
 }
 
 "Defining data that should be returned when user is queried"
 type ReturnUser{
-    fullName: String!
-    email: String
+    message: String!
 }
 
 "Defining todo types"
@@ -31,16 +31,17 @@ input UserInput{
     fullName: String!
     email: String
     password: String!
+    rePassword: String!
 }
 
 type Query{
-    user(ID: ID!): ReturnUser!
+    user(ID: ID!): User!
     todo(ID: ID!): Todo!
     getTodos(amount: Int): [Todo]
 }
 
 type Mutation{
-    createUser(userInput: UserInput): User!
+    createUser(userInput: UserInput): ReturnUser!
     createTodo(todoInput: TodoInput): Todo!
     deleteTodo(ID: ID!): Boolean
     editTodo(ID: ID!, todoInput: TodoInput): Boolean
