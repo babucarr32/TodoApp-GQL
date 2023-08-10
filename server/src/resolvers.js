@@ -1,6 +1,7 @@
 import { handleCreateUser } from "./actions/handleCreateUser.js";
 import Todo from "./model/Todo.js";
 import User from "./model/User.js";
+import bcrypt from "bcryptjs";
 
 const resolvers = {
   Query: {
@@ -30,7 +31,16 @@ const resolvers = {
       return result;
     },
 
-    async createTodo(_, { TodoInput: { name, description } }) {
+    async loginUser(_, { loginInput: { email, password } }) {
+      const result = await User.findOne({ email: email });
+      const isPasswordMatch = await bcrypt.compare(password, result.password);
+      if (isPasswordMatch) {
+      }
+      return { message: isPasswordMatch };
+      return { message: isPasswordMatch };
+    },
+
+    async createTodo(_, { todoInput: { name, description } }) {
       const createTodo = new Todo({
         name: name,
         description: description,

@@ -6,10 +6,15 @@ type User{
     password: String!
     rePassword: String!
 }
+"Defining user login types"
+input Login{
+    email: String!
+    password: String!
+}
 
 "Defining data that should be returned when user is queried"
 type ReturnUser{
-    message: String!
+    message: String
 }
 
 "Defining todo types"
@@ -42,6 +47,7 @@ type Query{
 
 type Mutation{
     createUser(userInput: UserInput): ReturnUser!
+    loginUser(loginInput: Login): ReturnUser
     createTodo(todoInput: TodoInput): Todo!
     deleteTodo(ID: ID!): Boolean
     editTodo(ID: ID!, todoInput: TodoInput): Boolean

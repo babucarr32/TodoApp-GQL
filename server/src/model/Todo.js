@@ -4,9 +4,9 @@ const todoSchema = new Schema({
   name: String,
   description: String,
   createdAt: String,
-  completed: Boolean,
+  completed: { type: Boolean, default: false },
 });
 
-const Todo = model("recipe", todoSchema);
+const Todo = model("todo", todoSchema);
 
 export default Todo;
