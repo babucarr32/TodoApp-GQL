@@ -1,3 +1,4 @@
+import { handleCreateUser } from "./actions/handleCreateUser.js";
 import Todo from "./model/Todo.js";
 import User from "./model/User.js";
 
@@ -20,18 +21,13 @@ const resolvers = {
       _,
       { userInput: { fullName, email, password, rePassword } }
     ) {
-      if (password === rePassword) {
-        const createUser = new User({
-          fullName,
-          email,
-          password,
-        });
-        const res = await createUser.save();
-        return {
-          message: "Created Account successfully.",
-        };
-      }
-      return { message: "The passwords do not match." };
+      const result = await handleCreateUser(
+        fullName,
+        email,
+        password,
+        rePassword
+      );
+      return result;
     },
 
     async createTodo(_, { TodoInput: { name, description } }) {

@@ -1,9 +1,24 @@
 import mongoose, { Schema } from "mongoose";
+import bcrypt from "bcryptjs";
 
 const userSchema = new Schema({
   fullName: String,
-  email: String,
+  email: {
+    type: String,
+    unique: true,
+  },
   password: String,
+});
+
+userSchema.pre("save", async function (next) {
+  const user = this;
+  user.password = await bcrypt.hash(user.password, 8);
+  next();
+
+  if (user.isModified("password")) {
+    user.password = await bcrypt.hash(user.password, 8);
+  }
+  next();
 });
 
 let User;
