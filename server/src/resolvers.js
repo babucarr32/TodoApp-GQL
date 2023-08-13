@@ -1,92 +1,33 @@
 import { handleCreateUser } from "./actions/handleCreateUser.js";
 import Todo from "./model/Todo.js";
 import User from "./model/User.js";
-import bcrypt from "bcryptjs";
 import { handleGenerateToken } from "./utils/GenerateToken.js";
-import { handleVerifyToken } from "./utils/VerifyToken.js";
+import { userResolver } from "./graphql/resolvers/userResolver.js";
+import { todoResolver } from "./graphql/resolvers/todoResolver.js";
+import { getTodosResolvers } from "./graphql/resolvers/getTodosResolvers.js";
+import { CreateUser } from "./graphql/mutations/createUser.js";
+import { loginUser } from "./graphql/mutations/loginUser.js";
+import { createTodo } from "./graphql/mutations/createTodo.js";
+import { deleteTodo } from "./graphql/mutations/deleteTodo.js";
+import { editTodo } from "./graphql/mutations/editTodo.js";
+
+// throw new UserInputError
+// 1h
+// 1:18
+// 1:33
 
 const resolvers = {
   Query: {
-    async user(_, { ID, token }) {
-      const result = handleVerifyToken(token);
-      if (!result) {
-        console.log("You must log in");
-      } else {
-        return await User.findById(ID);
-      }
-    },
-
-    async todo(_, { ID, token }) {
-      const result = handleVerifyToken(token);
-      if (!result) {
-        console.log("You must log in");
-      } else {
-        return await Todo.findById(ID);
-      }
-    },
-
-    async getTodos(_, { amount, token }) {
-      const result = handleVerifyToken(token);
-      if (!result) {
-        console.log("You must log in");
-      } else {
-        return await Todo.find().sort({ createdAt: -1 }).limit(amount);
-      }
-    },
+    ...userResolver,
+    ...todoResolver,
+    ...getTodosResolvers,
   },
   Mutation: {
-    async createUser(
-      _,
-      { userInput: { fullName, email, password, rePassword } }
-    ) {
-      const result = await handleCreateUser(
-        fullName,
-        email,
-        password,
-        rePassword
-      );
-      return result;
-    },
-
-    async loginUser(_, { loginInput: { email, password } }) {
-      const result = await User.findOne({ email: email });
-      const isPasswordMatch = await bcrypt.compare(password, result.password);
-      if (isPasswordMatch) {
-        const accessToken = handleGenerateToken("foo");
-        return { message: JSON.stringify({ ...result, accessToken }) };
-      }
-      return { message: "Username or password incorrect." };
-    },
-
-    async createTodo(_, { todoInput: { name, description } }) {
-      const createTodo = new Todo({
-        name: name,
-        description: description,
-        createdAt: new Date().toISOString(),
-        thumbsUp: 0,
-        thumbsDown: 0,
-      });
-      const res = await createTodo.save();
-
-      return {
-        id: res.id,
-        ...res._doc,
-      };
-    },
-    async deleteTodo(_, { ID }) {
-      const wasDeleted = (await Todo.deleteOne({ _id: ID })).deletedCount;
-      return wasDeleted;
-    },
-
-    async editTodo(_, { ID, TodoInput: { name, description } }) {
-      const wasEdited = (
-        await Todo.updateOne(
-          { _id: ID },
-          { name: name, description: description }
-        )
-      ).modifiedCount;
-      return wasEdited;
-    },
+    ...CreateUser,
+    ...loginUser,
+    ...createTodo,
+    ...deleteTodo,
+    ...editTodo,
   },
 };
 
