@@ -53,7 +53,6 @@ const resolvers = {
       const isPasswordMatch = await bcrypt.compare(password, result.password);
       if (isPasswordMatch) {
         const accessToken = handleGenerateToken("foo");
-        console.log("accessToken ", accessToken);
         return { message: JSON.stringify({ ...result, accessToken }) };
       }
       return { message: "Username or password incorrect." };
@@ -67,7 +66,6 @@ const resolvers = {
         thumbsUp: 0,
         thumbsDown: 0,
       });
-
       const res = await createTodo.save();
 
       return {

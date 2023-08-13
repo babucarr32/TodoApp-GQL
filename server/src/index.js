@@ -55,7 +55,7 @@ app.get(
 );
 
 app.get("/loggedIn", passport.authenticate("google"), (req, res) => {
-  res.json({ message: "Logged in" });
+  res.json({ message: req.user });
 });
 
 app.listen({ port: 3000 }, () => {
