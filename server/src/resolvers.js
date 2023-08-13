@@ -3,7 +3,7 @@ import Todo from "./model/Todo.js";
 import User from "./model/User.js";
 import bcrypt from "bcryptjs";
 import { handleGenerateToken } from "./utils/GenerateToken.js";
-import { handleVerifyToken } from "./utils/VarifyToken.js";
+import { handleVerifyToken } from "./utils/VerifyToken.js";
 
 const resolvers = {
   Query: {

@@ -51,13 +51,6 @@ passport.deserializeUser(function (user, cb) {
   cb(null, user);
 });
 
-// create a JSON object to store car data
-let car = {
-  name: "BMW",
-  model: "X5",
-  price: 50000,
-};
-
 app.get("/", (req, res) => {
   res.send("<h1>Welcome home</h1>");
 });
