@@ -8,7 +8,7 @@ import passport from "passport";
 import session from "express-session"; // Import express-session
 import { SessionData } from "./utils/SessionData.js";
 import { StrategyData } from "./utils/StrategyData.js";
-import jwt from "jsonwebtoken";
+import { handleGenerateToken } from "./utils/GenerateToken.js";
 
 async function connectToDatabase() {
   await connectDB();
@@ -34,13 +34,7 @@ app.use(passport.session());
 
 passport.use(
   new GoogleStrategy(StrategyData, function (issuer, profile, cb) {
-    const accessToken = jwt.sign(
-      {
-        data: "foobar",
-      },
-      "secret",
-      { expiresIn: "2m" }
-    );
+    const accessToken = handleGenerateToken("foo");
     return cb(null, { ...profile, accessToken });
   })
 );

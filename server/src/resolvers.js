@@ -2,6 +2,7 @@ import { handleCreateUser } from "./actions/handleCreateUser.js";
 import Todo from "./model/Todo.js";
 import User from "./model/User.js";
 import bcrypt from "bcryptjs";
+import { handleGenerateToken } from "./utils/GenerateToken.js";
 
 const resolvers = {
   Query: {
@@ -35,7 +36,8 @@ const resolvers = {
       const result = await User.findOne({ email: email });
       const isPasswordMatch = await bcrypt.compare(password, result.password);
       if (isPasswordMatch) {
-        return { message: JSON.stringify(result) };
+        const accessToken = handleGenerateToken("foo");
+        return { message: JSON.stringify({ ...result, accessToken }) };
       }
       return { message: "Username or password incorrect." };
     },
