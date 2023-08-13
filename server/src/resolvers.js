@@ -9,16 +9,29 @@ const resolvers = {
   Query: {
     async user(_, { ID, token }) {
       const result = handleVerifyToken(token);
-      console.log("verified token is ", result);
-      return await User.findById(ID);
+      if (!result) {
+        console.log("You must log in");
+      } else {
+        return await User.findById(ID);
+      }
     },
 
-    async todo(_, { ID }) {
-      return await Todo.findById(ID);
+    async todo(_, { ID, token }) {
+      const result = handleVerifyToken(token);
+      if (!result) {
+        console.log("You must log in");
+      } else {
+        return await Todo.findById(ID);
+      }
     },
 
-    async getTodos(_, { amount }) {
-      return await Todo.find().sort({ createdAt: -1 }).limit(amount);
+    async getTodos(_, { amount, token }) {
+      const result = handleVerifyToken(token);
+      if (!result) {
+        console.log("You must log in");
+      } else {
+        return await Todo.find().sort({ createdAt: -1 }).limit(amount);
+      }
     },
   },
   Mutation: {

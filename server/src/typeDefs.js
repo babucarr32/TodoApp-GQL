@@ -41,8 +41,8 @@ input UserInput{
 
 type Query{
     user(ID: ID!, token: String): User!
-    todo(ID: ID!): Todo!
-    getTodos(amount: Int): [Todo]
+    todo(ID: ID!, token: String): Todo!
+    getTodos(amount: Int, token: String): [Todo]
 }
 
 type Mutation{
