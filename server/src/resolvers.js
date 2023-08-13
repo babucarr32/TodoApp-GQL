@@ -35,9 +35,9 @@ const resolvers = {
       const result = await User.findOne({ email: email });
       const isPasswordMatch = await bcrypt.compare(password, result.password);
       if (isPasswordMatch) {
+        return { message: JSON.stringify(result) };
       }
-      return { message: isPasswordMatch };
-      return { message: isPasswordMatch };
+      return { message: "Username or password incorrect." };
     },
 
     async createTodo(_, { todoInput: { name, description } }) {
