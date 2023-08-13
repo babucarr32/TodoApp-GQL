@@ -9,6 +9,7 @@ import session from "express-session"; // Import express-session
 import { SessionData } from "./utils/SessionData.js";
 import { StrategyData } from "./utils/StrategyData.js";
 import { handleGenerateToken } from "./utils/GenerateToken.js";
+import cookieParser from "cookie-parser";
 
 async function connectToDatabase() {
   await connectDB();
@@ -24,6 +25,7 @@ const app = express();
 await server.start();
 server.applyMiddleware({ app });
 app.use(express.json());
+app.use(cookieParser());
 
 // Add express-session middleware
 app.use(session(SessionData));
@@ -49,12 +51,24 @@ passport.deserializeUser(function (user, cb) {
   cb(null, user);
 });
 
+// create a JSON object to store car data
+let car = {
+  name: "BMW",
+  model: "X5",
+  price: 50000,
+};
+
+app.get("/", (req, res) => {
+  res.send("<h1>Welcome home</h1>");
+});
+
 app.get(
   "/login/google",
   passport.authenticate("google", { scope: ["email", "profile"] })
 );
 
 app.get("/loggedIn", passport.authenticate("google"), (req, res) => {
+  res.cookie("googleCookie", req.user);
   res.json({ message: req.user });
 });
 
