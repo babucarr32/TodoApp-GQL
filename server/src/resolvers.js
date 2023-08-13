@@ -3,10 +3,13 @@ import Todo from "./model/Todo.js";
 import User from "./model/User.js";
 import bcrypt from "bcryptjs";
 import { handleGenerateToken } from "./utils/GenerateToken.js";
+import { handleVerifyToken } from "./utils/VarifyToken.js";
 
 const resolvers = {
   Query: {
-    async user(_, { ID }) {
+    async user(_, { ID, token }) {
+      const result = handleVerifyToken(token);
+      console.log("verified token is ", result);
       return await User.findById(ID);
     },
 
@@ -37,6 +40,7 @@ const resolvers = {
       const isPasswordMatch = await bcrypt.compare(password, result.password);
       if (isPasswordMatch) {
         const accessToken = handleGenerateToken("foo");
+        console.log("accessToken ", accessToken);
         return { message: JSON.stringify({ ...result, accessToken }) };
       }
       return { message: "Username or password incorrect." };

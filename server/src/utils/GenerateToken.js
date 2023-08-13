@@ -1,11 +1,12 @@
 import jwt from "jsonwebtoken";
+import "dotenv/config";
 
 export const handleGenerateToken = (token) => {
   return jwt.sign(
     {
       data: token,
     },
-    "secret",
+    process.env.AccessToken,
     { expiresIn: "2m" }
   );
 };

@@ -4,7 +4,7 @@ type User{
     fullName: String!
     email: String!
     password: String!
-    rePassword: String!
+    rePassword: String
 }
 "Defining user login types"
 input Login{
@@ -40,7 +40,7 @@ input UserInput{
 }
 
 type Query{
-    user(ID: ID!): User!
+    user(ID: ID!, token: String): User!
     todo(ID: ID!): Todo!
     getTodos(amount: Int): [Todo]
 }
