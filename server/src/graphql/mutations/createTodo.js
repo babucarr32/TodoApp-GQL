@@ -10,7 +10,6 @@ export const createTodo = {
       thumbsDown: 0,
     });
     const res = await createTodo.save();
-
     return {
       id: res.id,
       ...res._doc,

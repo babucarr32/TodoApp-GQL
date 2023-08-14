@@ -1,12 +1,15 @@
 import { handleVerifyToken } from "../../utils/VerifyToken.js";
+import Todo from "../../model/Todo.js";
 
 export const todoResolver = {
-  async todo(_, { ID, token }) {
-    const result = handleVerifyToken(token);
+  async todo(_, { ID }, context) {
+    const result = handleVerifyToken(context);
     if (!result) {
-      console.log("You must log in");
+      throw new Error("Invalid Authorization header.");
     } else {
-      return await Todo.findById(ID);
+      const newTodo = await Todo.findById(ID);
+      console.log(newTodo);
+      return { ...newTodo._doc };
     }
   },
 };

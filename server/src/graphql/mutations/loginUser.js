@@ -7,8 +7,8 @@ export const loginUser = {
     const result = await User.findOne({ email: email });
     const isPasswordMatch = await bcrypt.compare(password, result.password);
     if (isPasswordMatch) {
-      const accessToken = handleGenerateToken("foo");
-      return { message: JSON.stringify({ ...result, accessToken }) };
+      const accessToken = handleGenerateToken(result.email);
+      return { id: result._id, ...result._doc, accessToken };
     }
     return { message: "Username or password incorrect." };
   },

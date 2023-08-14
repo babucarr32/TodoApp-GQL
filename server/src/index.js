@@ -19,6 +19,7 @@ connectToDatabase();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: ({ req }) => ({ req }),
 });
 
 const app = express();
@@ -36,7 +37,7 @@ app.use(passport.session());
 
 passport.use(
   new GoogleStrategy(StrategyData, function (issuer, profile, cb) {
-    const accessToken = handleGenerateToken("foo");
+    const accessToken = handleGenerateToken(profile.emails[0].value);
     return cb(null, { ...profile, accessToken });
   })
 );

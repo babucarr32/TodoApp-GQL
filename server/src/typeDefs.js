@@ -14,6 +14,13 @@ input Login{
 
 "Defining data that should be returned when user is queried"
 type ReturnUser{
+    id: String
+    fullName: String
+    email: String
+    accessToken: String
+}
+
+type ReturnMessage{
     message: String
 }
 
@@ -40,13 +47,13 @@ input UserInput{
 }
 
 type Query{
-    user(ID: ID!, token: String): User!
-    todo(ID: ID!, token: String): Todo!
-    getTodos(amount: Int, token: String): [Todo]
+    user(ID: ID!): User!
+    todo(ID: ID!): Todo
+    getTodos(amount: Int): [Todo]
 }
 
 type Mutation{
-    createUser(userInput: UserInput): ReturnUser!
+    createUser(userInput: UserInput): ReturnMessage!
     loginUser(loginInput: Login): ReturnUser
     createTodo(todoInput: TodoInput): Todo!
     deleteTodo(ID: ID!): Boolean

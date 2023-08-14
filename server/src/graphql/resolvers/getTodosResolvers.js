@@ -1,8 +1,8 @@
 import { handleVerifyToken } from "../../utils/VerifyToken.js";
 
 export const getTodosResolvers = {
-  async getTodos(_, { amount, token }) {
-    const result = handleVerifyToken(token);
+  async getTodos(_, { amount }, context) {
+    const result = handleVerifyToken(context);
     if (!result) {
       console.log("You must log in");
     } else {

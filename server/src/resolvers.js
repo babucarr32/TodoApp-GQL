@@ -1,7 +1,6 @@
 import { handleCreateUser } from "./actions/handleCreateUser.js";
 import Todo from "./model/Todo.js";
 import User from "./model/User.js";
-import { handleGenerateToken } from "./utils/GenerateToken.js";
 import { userResolver } from "./graphql/resolvers/userResolver.js";
 import { todoResolver } from "./graphql/resolvers/todoResolver.js";
 import { getTodosResolvers } from "./graphql/resolvers/getTodosResolvers.js";
