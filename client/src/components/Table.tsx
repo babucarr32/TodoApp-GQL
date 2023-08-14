@@ -7,6 +7,9 @@ import {
   TableHeader,
   TableRow,
 } from "../../@/components/ui/table";
+import { useQuery } from "@apollo/client";
+import { GET_TODOS_QUERY } from "./query";
+import { Todo } from "../Types/TodoType";
 
 const invoices = [
   {
@@ -138,6 +141,12 @@ const invoices = [
 ];
 
 export function TableDemo() {
+  const { loading, error, data } = useQuery(GET_TODOS_QUERY, {
+    variables: { amount: 10 }, // Pass your variables here
+  });
+  if (loading) return <p>Loading</p>;
+  if (error) return <p>Ohh ohh something went wrong</p>;
+  console.log(data);
   return (
     <div className="bg-slate-950 text-white p-10 rounded-lg h-[90vh] overflow-scroll">
       <Table>
@@ -153,18 +162,16 @@ export function TableDemo() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((invoice, index) => (
+          {data.getTodos.map((todo: Todo, index: number) => (
             <TableRow
               key={index}
               className=" hover:bg-slate-900 border-b-2 border-slate-500"
             >
-              <TableCell className="font-medium p-5">
-                {invoice.invoice}
-              </TableCell>
-              <TableCell>{invoice.paymentStatus}</TableCell>
-              <TableCell>{invoice.paymentMethod}</TableCell>
+              <TableCell className="font-medium p-5">{index}</TableCell>
+              <TableCell>{`${todo.completed}`}</TableCell>
+              <TableCell>{todo.description}</TableCell>
               <TableCell className="text-right">
-                {invoice.totalAmount}
+                {new Date().toISOString()}
               </TableCell>
             </TableRow>
           ))}
