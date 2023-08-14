@@ -6,7 +6,16 @@ export const GET_TODOS_QUERY = gql`
       completed
       createdAt
       description
-      name
+    }
+  }
+`;
+
+export const CREATE_TODO = gql`
+  mutation Mutation($todoInput: TodoInput) {
+    createTodo(todoInput: $todoInput) {
+      completed
+      createdAt
+      description
     }
   }
 `;

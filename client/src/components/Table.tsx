@@ -163,9 +163,9 @@ export function TableDemo() {
           {data.getTodos.map((todo: Todo, index: string) => (
             <TableRow
               key={index}
-              className=" hover:bg-slate-900 border-b-2 border-slate-500"
+              className=" hover:bg-slate-900 border-b-2 border-slate-800"
             >
-              <TableCell className="font-medium p-6">
+              <TableCell className="font-medium p-6 py-10">
                 <AppCheckbox id={index} />
               </TableCell>
               <TableCell>{`${todo.completed}`}</TableCell>

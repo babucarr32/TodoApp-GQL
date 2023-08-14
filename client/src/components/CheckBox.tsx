@@ -5,7 +5,10 @@ import { Checkbox } from "../../@/components/ui/checkbox";
 
 const AppCheckbox: React.FC<{ id: string }> = ({ id }) => {
   return (
-    <Checkbox id={id} className=" rounded-full border-2 border-white w-5 h-5" />
+    <Checkbox
+      id={id}
+      className=" rounded-full border-2 border-white w-4 h-4 absolute t-[50%] translate-y-[-50%]"
+    />
   );
 };
 

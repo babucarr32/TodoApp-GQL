@@ -1,13 +1,8 @@
 import { useState } from "react";
 import { TableDemo } from "./components/Table";
 import { ComboboxDemo } from "./components/ComboBox";
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  gql,
-} from "@apollo/client";
-import Client from "./components/Client";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import AddTodo from "./components/AddTodo";
 
 const client = new ApolloClient({
   uri: "http://localhost:3000/graphql",
@@ -24,19 +19,12 @@ function App() {
               A list of Todo's
             </p>
             <div className="flex justify-between gap-3">
-              <form className="w-full">
-                <input
-                  type="text"
-                  placeholder="Add todo..."
-                  className="w-full p-3 rounded-lg bg-transparent border-2 border-slate-500 outline-none text-white mt-5"
-                />
-              </form>
-
+              <AddTodo />
               <form className="w-full">
                 <input
                   type="text"
                   placeholder="Search todo..."
-                  className="w-full p-3 rounded-lg bg-transparent border-2 border-slate-500 outline-none text-white mt-5"
+                  className="w-full p-3 rounded-lg bg-transparent border-2 border-slate-800 outline-none text-white mt-5"
                 />
               </form>
             </div>

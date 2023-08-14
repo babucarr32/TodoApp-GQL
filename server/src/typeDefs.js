@@ -26,7 +26,6 @@ type ReturnMessage{
 
 "Defining todo types"
 type Todo{
-    name: String,
   description: String,
   createdAt: String,
   completed: Boolean,
@@ -34,7 +33,6 @@ type Todo{
 
 "For creating todo"
 input TodoInput{
-    name: String
     description: String
 }
 
