@@ -20,24 +20,16 @@ import {
 
 const frameworks = [
   {
-    value: "next.js",
-    label: "Next.js",
+    value: "completed",
+    label: "Completed",
   },
   {
-    value: "sveltekit",
-    label: "SvelteKit",
+    value: "active",
+    label: "Active",
   },
   {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
+    value: "all",
+    label: "All",
   },
 ];
 
@@ -52,21 +44,21 @@ export function ComboboxDemo() {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] bg-slate-950 flex justify-between items-center p-3 text-white"
+          className="w-[200px] bg-slate-950 flex justify-between items-center p-3 text-white border-2 border-slate-950 rounded-lg"
         >
           {value
             ? frameworks.find((framework) => framework.value === value)?.label
-            : "Select framework..."}
+            : "Filter todo..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] bg-slate-900 shadow-xl flex flex-col items-center p-3">
+      <PopoverContent className="w-[200px] bg-slate-900 shadow-xl flex flex-col items-center p-3 border-2 border-slate-950 rounded-lg">
         <Command>
           <CommandInput
-            placeholder="Search framework..."
+            placeholder="No framework..."
             className="p-2 bg-transparent text-white outline-none"
           />
-          <CommandEmpty>No framework found.</CommandEmpty>
+          <CommandEmpty className="text-white">No match found...</CommandEmpty>
           <CommandGroup>
             {frameworks.map((framework) => (
               <CommandItem

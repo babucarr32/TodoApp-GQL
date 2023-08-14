@@ -10,6 +10,7 @@ import {
 import { useQuery } from "@apollo/client";
 import { GET_TODOS_QUERY } from "./query";
 import { Todo } from "../Types/TodoType";
+import AppCheckbox from "./CheckBox";
 
 const invoices = [
   {
@@ -148,11 +149,8 @@ export function TableDemo() {
   if (error) return <p>Ohh ohh something went wrong</p>;
   console.log(data);
   return (
-    <div className="bg-slate-950 text-white p-10 rounded-lg h-[90vh] overflow-scroll">
+    <div className="bg-slate-950 text-white p-10 rounded-lg h-[75vh] overflow-scroll">
       <Table>
-        <TableCaption className="pb-10 text-4xl font-extrabold">
-          A list of Todo's.
-        </TableCaption>
         <TableHeader>
           <TableRow className="p-5">
             <TableHead className="w-[100px] p-5">Check</TableHead>
@@ -162,12 +160,14 @@ export function TableDemo() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.getTodos.map((todo: Todo, index: number) => (
+          {data.getTodos.map((todo: Todo, index: string) => (
             <TableRow
               key={index}
               className=" hover:bg-slate-900 border-b-2 border-slate-500"
             >
-              <TableCell className="font-medium p-5">{index}</TableCell>
+              <TableCell className="font-medium p-6">
+                <AppCheckbox id={index} />
+              </TableCell>
               <TableCell>{`${todo.completed}`}</TableCell>
               <TableCell>{todo.description}</TableCell>
               <TableCell className="text-right">
