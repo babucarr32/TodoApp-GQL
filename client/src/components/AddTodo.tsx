@@ -1,14 +1,11 @@
 import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
-import { CREATE_TODO } from "./query";
-
-interface TodoType {
-  description: string;
-}
+import { CREATE_TODO } from "../graphql/query";
+import { AddTodoType } from "../Types/TodoType";
 
 const AddTodo: React.FC = () => {
-  const [todo, setTodo] = useState<TodoType>({ description: "" });
-  const [createTodo] = useMutation(CREATE_TODO);
+  const [todo, setTodo] = useState<AddTodoType>({ description: "" });
+  const [createTodo, { data, loading, error }] = useMutation(CREATE_TODO);
 
   const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newTodo = { ...todo };
@@ -21,12 +18,14 @@ const AddTodo: React.FC = () => {
     const result = await createTodo({
       variables: {
         todoInput: {
-          description: "My first client todo added",
+          description: `${todo.description}`,
         },
       },
     });
-    console.log("Submitted", result);
+    console.log(result);
   };
+
+  if (loading) return <p className="text-white text-[3em]">Loading....</p>;
 
   return (
     <form className="w-full" onSubmit={(e) => handleSubmit(e)}>

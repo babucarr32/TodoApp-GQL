@@ -1,153 +1,34 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "../../@/components/ui/table";
 import { useQuery } from "@apollo/client";
-import { GET_TODOS_QUERY } from "./query";
+import { GET_TODOS_QUERY } from "../graphql/query";
 import { Todo } from "../Types/TodoType";
 import AppCheckbox from "./CheckBox";
-
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-];
+import { useEffect } from "react";
+import { useAtom } from "jotai";
+import { jotaiTodo } from "../atoms/JotaiAtoms";
+import { todosVar } from "../graphql/variables";
 
 export function TableDemo() {
-  const { loading, error, data } = useQuery(GET_TODOS_QUERY, {
-    variables: { amount: 10 }, // Pass your variables here
-  });
+  const [todos, setTodos] = useAtom(jotaiTodo);
+  const { loading, error, data } = useQuery(GET_TODOS_QUERY, { ...todosVar });
+
+  useEffect(() => {
+    const handleSetTodo = () => {
+      if (data) setTodos(data.getTodos);
+    };
+    handleSetTodo();
+  }, [data]);
+
   if (loading) return <p>Loading</p>;
   if (error) return <p>Ohh ohh something went wrong</p>;
-  console.log(data);
+
   return (
     <div className="bg-slate-950 text-white p-10 rounded-lg h-[75vh] overflow-scroll">
       <Table>
@@ -160,19 +41,17 @@ export function TableDemo() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.getTodos.map((todo: Todo, index: string) => (
+          {todos.map((todo: Todo, index: number) => (
             <TableRow
               key={index}
               className=" hover:bg-slate-900 border-b-2 border-slate-800"
             >
               <TableCell className="font-medium p-6 py-10">
-                <AppCheckbox id={index} />
+                <AppCheckbox id={`${index}`} />
               </TableCell>
               <TableCell>{`${todo.completed}`}</TableCell>
               <TableCell>{todo.description}</TableCell>
-              <TableCell className="text-right">
-                {new Date().toISOString()}
-              </TableCell>
+              <TableCell className="text-right">{todo.createdAt}</TableCell>
             </TableRow>
           ))}
         </TableBody>

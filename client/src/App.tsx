@@ -3,6 +3,7 @@ import { TableDemo } from "./components/Table";
 import { ComboboxDemo } from "./components/ComboBox";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import AddTodo from "./components/AddTodo";
+import SearchTodoContainer from "./components/SearchTodoContainer";
 
 const client = new ApolloClient({
   uri: "http://localhost:3000/graphql",
@@ -20,13 +21,7 @@ function App() {
             </p>
             <div className="flex justify-between gap-3">
               <AddTodo />
-              <form className="w-full">
-                <input
-                  type="text"
-                  placeholder="Search todo..."
-                  className="w-full p-3 rounded-lg bg-transparent border-2 border-slate-800 outline-none text-white mt-5"
-                />
-              </form>
+              <SearchTodoContainer />
             </div>
           </div>
           <TableDemo />

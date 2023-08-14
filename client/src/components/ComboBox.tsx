@@ -31,6 +31,10 @@ const frameworks = [
     value: "all",
     label: "All",
   },
+  {
+    value: "clear completed",
+    label: "Clear Completed",
+  },
 ];
 
 export function ComboboxDemo() {
