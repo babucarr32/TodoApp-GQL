@@ -54,6 +54,16 @@ export function TableDemo() {
     setTodoId(id);
   };
 
+  const handleDeleteTodo = (id: string) => {
+    const result = todos.find((todo) => todo.id == id);
+    if (result) {
+      const newTodo = [...todos];
+      newTodo.splice(newTodo.indexOf(result), 1);
+      setTodos(newTodo);
+      console.log(id);
+    }
+  };
+
   return (
     <div className="bg-slate-950 text-white p-10 rounded-lg h-[75vh] overflow-scroll">
       <Table>
@@ -77,7 +87,10 @@ export function TableDemo() {
               <TableCell>{`${todo.completed}`}</TableCell>
               <TableCell>{todo.description}</TableCell>
               <TableCell className="text-left">{todo.createdAt}</TableCell>
-              <TableCell className="text-left text-red-500 cursor-pointer">
+              <TableCell
+                className="text-left text-red-500 cursor-pointer"
+                onClick={() => handleDeleteTodo(todo.id)}
+              >
                 Delete
               </TableCell>
               <TableCell

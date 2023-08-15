@@ -22,22 +22,30 @@ const AddTodo: React.FC = () => {
     setTodo(newTodo);
   };
 
+  const handleEditTodo = () => {
+    const result = todos.find((todo) => {
+      return todo.id == todoId;
+    });
+    if (result) {
+      const result2 = { ...result };
+      result2.description = todo.description;
+      const newTodo = [...todos];
+      newTodo.splice(newTodo.indexOf(result), 1, result2);
+      setTodos([...newTodo]);
+      handleResetForm();
+    }
+  };
+
+  const handleResetForm = () => {
+    setTodoId("");
+    setIsEditing(false);
+    setTodo({ description: "" });
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isEditTodo) {
-      const result = todos.find((todo) => {
-        return todo.id == todoId;
-      });
-      if (result) {
-        const result2 = { ...result };
-        result2.description = todo.description;
-        const newTodo = [...todos];
-        newTodo.splice(newTodo.indexOf(result), 1, result2);
-        setTodos([...newTodo]);
-        setTodoId("");
-        setIsEditing(false);
-        setTodo({ description: "" });
-      }
+      handleEditTodo();
     } else {
       const result = await createTodo({
         variables: {
