@@ -1,4 +1,5 @@
 export interface Todo {
+  id: string;
   completed: boolean;
   createdAt: string;
   description: string;

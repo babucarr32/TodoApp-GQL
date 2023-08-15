@@ -1,11 +1,20 @@
 import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
+import React from "react";
 import { CREATE_TODO } from "../graphql/query";
-import { AddTodoType } from "../Types/TodoType";
+import { useAtom } from "jotai";
+import {
+  jotaiAddTodo,
+  jotaiEditTodo,
+  jotaiTodo,
+  jotaiTodoId,
+} from "../atoms/JotaiAtoms";
 
 const AddTodo: React.FC = () => {
-  const [todo, setTodo] = useState<AddTodoType>({ description: "" });
+  const [todo, setTodo] = useAtom(jotaiAddTodo);
   const [createTodo, { data, loading, error }] = useMutation(CREATE_TODO);
+  const [isEditTodo, setIsEditing] = useAtom(jotaiEditTodo);
+  const [todoId, setTodoId] = useAtom(jotaiTodoId);
+  const [todos, setTodos] = useAtom(jotaiTodo);
 
   const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newTodo = { ...todo };
@@ -15,14 +24,29 @@ const AddTodo: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const result = await createTodo({
-      variables: {
-        todoInput: {
-          description: `${todo.description}`,
+    if (isEditTodo) {
+      const result = todos.find((todo) => {
+        return todo.id == todoId;
+      });
+      if (result) {
+        const result2 = { ...result };
+        result2.description = todo.description;
+        const newTodo = [...todos];
+        newTodo.splice(newTodo.indexOf(result), 1, result2);
+        setTodos([...newTodo]);
+        setTodoId("");
+        setIsEditing(false);
+        setTodo({ description: "" });
+      }
+    } else {
+      const result = await createTodo({
+        variables: {
+          todoInput: {
+            description: `${todo.description}`,
+          },
         },
-      },
-    });
-    console.log(result);
+      });
+    }
   };
 
   if (loading) return <p className="text-white text-[3em]">Loading....</p>;

@@ -1,7 +1,8 @@
 import { atom } from "jotai";
-import { Todo } from "../Types/TodoType";
+import { AddTodoType, Todo } from "../Types/TodoType";
 
 const todoPayload = {
+  id: "",
   completed: false,
   createdAt: "",
   description: "",
@@ -9,3 +10,6 @@ const todoPayload = {
 };
 export const jotaiTodo = atom<Todo[]>([{ ...todoPayload }]);
 export const jotaiSearchValue = atom("");
+export const jotaiAddTodo = atom<AddTodoType>({ description: "" });
+export const jotaiEditTodo = atom<boolean>(false);
+export const jotaiTodoId = atom<string>("");

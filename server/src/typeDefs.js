@@ -26,6 +26,7 @@ type ReturnMessage{
 
 "Defining todo types"
 type Todo{
+    id: String,
   description: String,
   createdAt: String,
   completed: Boolean,

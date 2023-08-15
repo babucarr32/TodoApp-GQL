@@ -12,13 +12,22 @@ import { Todo } from "../Types/TodoType";
 import AppCheckbox from "./CheckBox";
 import { useEffect } from "react";
 import { useAtom } from "jotai";
-import { jotaiSearchValue, jotaiTodo } from "../atoms/JotaiAtoms";
+import {
+  jotaiAddTodo,
+  jotaiEditTodo,
+  jotaiSearchValue,
+  jotaiTodo,
+  jotaiTodoId,
+} from "../atoms/JotaiAtoms";
 import { todosVar } from "../graphql/variables";
 
 export function TableDemo() {
   const [todos, setTodos] = useAtom(jotaiTodo);
   const [searchResult] = useAtom(jotaiSearchValue);
   const { loading, error, data } = useQuery(GET_TODOS_QUERY, { ...todosVar });
+  const [, setEditTodo] = useAtom(jotaiAddTodo);
+  const [, setTodoId] = useAtom(jotaiTodoId);
+  const [, setIsEditTodo] = useAtom(jotaiEditTodo);
 
   useEffect(() => {
     const handleSetTodo = () => {
@@ -36,7 +45,15 @@ export function TableDemo() {
       .includes(searchResult.toLocaleLowerCase());
   });
 
-  console.log("filteredTodos ", searchResult);
+  const handleEditTodo = (id: string) => {
+    const result = todos.find((todo) => {
+      return todo.id == id;
+    });
+    setEditTodo({ description: result?.description as string });
+    setIsEditTodo(true);
+    setTodoId(id);
+  };
+
   return (
     <div className="bg-slate-950 text-white p-10 rounded-lg h-[75vh] overflow-scroll">
       <Table>
@@ -45,7 +62,7 @@ export function TableDemo() {
             <TableHead className="w-[100px] p-5">Check</TableHead>
             <TableHead className="text-left">Status</TableHead>
             <TableHead>Todo</TableHead>
-            <TableHead className="text-right">Time</TableHead>
+            <TableHead className="text-left">Time</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -59,7 +76,16 @@ export function TableDemo() {
               </TableCell>
               <TableCell>{`${todo.completed}`}</TableCell>
               <TableCell>{todo.description}</TableCell>
-              <TableCell className="text-right">{todo.createdAt}</TableCell>
+              <TableCell className="text-left">{todo.createdAt}</TableCell>
+              <TableCell className="text-left text-red-500 cursor-pointer">
+                Delete
+              </TableCell>
+              <TableCell
+                className="text-left text-blue-500 cursor-pointer"
+                onClick={() => handleEditTodo(todo.id)}
+              >
+                Edit
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -6,6 +6,7 @@ export const GET_TODOS_QUERY = gql`
       completed
       createdAt
       description
+      id
     }
   }
 `;
