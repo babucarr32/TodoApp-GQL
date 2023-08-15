@@ -60,49 +60,56 @@ export function TableDemo() {
       const newTodo = [...todos];
       newTodo.splice(newTodo.indexOf(result), 1);
       setTodos(newTodo);
-      console.log(id);
     }
   };
 
   return (
     <div className="bg-slate-950 text-white p-10 rounded-lg h-[75vh] overflow-scroll">
-      <Table>
-        <TableHeader>
-          <TableRow className="p-5">
-            <TableHead className="w-[100px] p-5">Check</TableHead>
-            <TableHead className="text-left">Status</TableHead>
-            <TableHead>Todo</TableHead>
-            <TableHead className="text-left">Time</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {filteredTodos.map((todo: Todo, index: number) => (
-            <TableRow
-              key={index}
-              className=" hover:bg-slate-900 border-b-2 border-slate-800"
-            >
-              <TableCell className="font-medium p-6 py-10">
-                <AppCheckbox id={`${index}`} />
-              </TableCell>
-              <TableCell>{`${todo.completed}`}</TableCell>
-              <TableCell>{todo.description}</TableCell>
-              <TableCell className="text-left">{todo.createdAt}</TableCell>
-              <TableCell
-                className="text-left text-red-500 cursor-pointer"
-                onClick={() => handleDeleteTodo(todo.id)}
-              >
-                Delete
-              </TableCell>
-              <TableCell
-                className="text-left text-blue-500 cursor-pointer"
-                onClick={() => handleEditTodo(todo.id)}
-              >
-                Edit
-              </TableCell>
+      {!filteredTodos.length ? (
+        <div className="relative h-full w-full">
+          <p className="text-[3em] text-center absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
+            No todo's available...
+          </p>
+        </div>
+      ) : (
+        <Table>
+          <TableHeader>
+            <TableRow className="p-5">
+              <TableHead className="w-[100px] p-5">Check</TableHead>
+              <TableHead className="text-left">Status</TableHead>
+              <TableHead>Todo</TableHead>
+              <TableHead className="text-left">Time</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {filteredTodos.map((todo: Todo, index: number) => (
+              <TableRow
+                key={index}
+                className=" hover:bg-slate-900 border-b-2 border-slate-800"
+              >
+                <TableCell className="font-medium p-6 py-10">
+                  <AppCheckbox id={`${index}`} />
+                </TableCell>
+                <TableCell>{`${todo.completed}`}</TableCell>
+                <TableCell>{todo.description}</TableCell>
+                <TableCell className="text-left">{todo.createdAt}</TableCell>
+                <TableCell
+                  className="text-left text-red-500 cursor-pointer"
+                  onClick={() => handleDeleteTodo(todo.id)}
+                >
+                  Delete
+                </TableCell>
+                <TableCell
+                  className="text-left text-blue-500 cursor-pointer"
+                  onClick={() => handleEditTodo(todo.id)}
+                >
+                  Edit
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
     </div>
   );
 }

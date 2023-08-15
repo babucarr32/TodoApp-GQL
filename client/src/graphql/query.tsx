@@ -20,3 +20,9 @@ export const CREATE_TODO = gql`
     }
   }
 `;
+
+export const EDIT_TODO = gql`
+  mutation Mutation($id: ID!, $todoInput: TodoInput) {
+    editTodo(ID: $id, todoInput: $todoInput)
+  }
+`;

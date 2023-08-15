@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import React from "react";
-import { CREATE_TODO } from "../graphql/query";
+import { CREATE_TODO, EDIT_TODO } from "../graphql/query";
 import { useAtom } from "jotai";
 import {
   jotaiAddTodo,
@@ -12,6 +12,7 @@ import {
 const AddTodo: React.FC = () => {
   const [todo, setTodo] = useAtom(jotaiAddTodo);
   const [createTodo, { data, loading, error }] = useMutation(CREATE_TODO);
+  const [editTodo] = useMutation(EDIT_TODO);
   const [isEditTodo, setIsEditing] = useAtom(jotaiEditTodo);
   const [todoId, setTodoId] = useAtom(jotaiTodoId);
   const [todos, setTodos] = useAtom(jotaiTodo);
@@ -22,7 +23,7 @@ const AddTodo: React.FC = () => {
     setTodo(newTodo);
   };
 
-  const handleEditTodo = () => {
+  const handleEditTodo = async () => {
     const result = todos.find((todo) => {
       return todo.id == todoId;
     });
@@ -32,6 +33,15 @@ const AddTodo: React.FC = () => {
       const newTodo = [...todos];
       newTodo.splice(newTodo.indexOf(result), 1, result2);
       setTodos([...newTodo]);
+      await editTodo({
+        variables: {
+          id: todoId,
+          todoInput: {
+            description: result2.description,
+          },
+        },
+      });
+
       handleResetForm();
     }
   };
