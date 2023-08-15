@@ -66,14 +66,6 @@ export function TableDemo() {
   };
 
   const handleChecked = async (id: string, status: boolean, cb: Function) => {
-    await changeStatus({
-      variables: {
-        id: id,
-        completedInput: {
-          completed: !status,
-        },
-      },
-    });
     const result = todos.find((todo) => todo.id == id);
     if (result) {
       const result2 = { ...result };
@@ -82,6 +74,14 @@ export function TableDemo() {
       const newTodos = [...todos];
       newTodos.splice(newTodos.indexOf(result), 1, result2);
       setTodos([...newTodos]);
+      await changeStatus({
+        variables: {
+          id: id,
+          completedInput: {
+            completed: !status,
+          },
+        },
+      });
       cb();
     }
   };
