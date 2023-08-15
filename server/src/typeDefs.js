@@ -37,6 +37,11 @@ input TodoInput{
     description: String
 }
 
+"For Making todo status"
+input CompletedInput{
+    completed: Boolean
+}
+
 "For creating User"
 input UserInput{
     fullName: String!
@@ -57,6 +62,7 @@ type Mutation{
     createTodo(todoInput: TodoInput): Todo!
     deleteTodo(ID: ID!): Boolean
     editTodo(ID: ID!, todoInput: TodoInput): Boolean
+    changeStatus(ID: ID!, completedInput:CompletedInput): Boolean
 }
 `;
 

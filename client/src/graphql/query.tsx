@@ -26,3 +26,15 @@ export const EDIT_TODO = gql`
     editTodo(ID: $id, todoInput: $todoInput)
   }
 `;
+
+export const DELETE_TODO = gql`
+  mutation DeleteTodo($id: ID!) {
+    deleteTodo(ID: $id)
+  }
+`;
+
+export const CHANGE_STATUS = gql`
+  mutation Mutation($id: ID!, $completedInput: CompletedInput) {
+    changeStatus(ID: $id, completedInput: $completedInput)
+  }
+`;

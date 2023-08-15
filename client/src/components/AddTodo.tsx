@@ -8,6 +8,7 @@ import {
   jotaiTodo,
   jotaiTodoId,
 } from "../atoms/JotaiAtoms";
+import { Todo } from "../Types/TodoType";
 
 const AddTodo: React.FC = () => {
   const [todo, setTodo] = useAtom(jotaiAddTodo);
@@ -24,26 +25,27 @@ const AddTodo: React.FC = () => {
   };
 
   const handleEditTodo = async () => {
-    const result = todos.find((todo) => {
-      return todo.id == todoId;
-    });
+    const result = todos.find((todo) => todo.id == todoId);
     if (result) {
       const result2 = { ...result };
       result2.description = todo.description;
       const newTodo = [...todos];
       newTodo.splice(newTodo.indexOf(result), 1, result2);
       setTodos([...newTodo]);
-      await editTodo({
-        variables: {
-          id: todoId,
-          todoInput: {
-            description: result2.description,
-          },
-        },
-      });
-
+      handleServerTodoEdit(result2);
       handleResetForm();
     }
+  };
+
+  const handleServerTodoEdit = async (obj: Todo) => {
+    await editTodo({
+      variables: {
+        id: todoId,
+        todoInput: {
+          description: obj.description,
+        },
+      },
+    });
   };
 
   const handleResetForm = () => {
@@ -57,7 +59,7 @@ const AddTodo: React.FC = () => {
     if (isEditTodo) {
       handleEditTodo();
     } else {
-      const result = await createTodo({
+      await createTodo({
         variables: {
           todoInput: {
             description: `${todo.description}`,

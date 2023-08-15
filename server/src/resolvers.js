@@ -10,11 +10,6 @@ import { createTodo } from "./graphql/mutations/createTodo.js";
 import { deleteTodo } from "./graphql/mutations/deleteTodo.js";
 import { editTodo } from "./graphql/mutations/editTodo.js";
 
-// throw new UserInputError
-// 1h
-// 1:18
-// 1:33
-
 const resolvers = {
   Query: {
     ...userResolver,
@@ -27,6 +22,12 @@ const resolvers = {
     ...createTodo,
     ...deleteTodo,
     ...editTodo,
+    async changeStatus(_, { ID, completedInput: { completed } }) {
+      const wasUpdated = (
+        await Todo.updateOne({ _id: ID }, { completed: completed })
+      ).modifiedCount;
+      return wasUpdated;
+    },
   },
 };
 
