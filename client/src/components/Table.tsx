@@ -12,11 +12,12 @@ import { Todo } from "../Types/TodoType";
 import AppCheckbox from "./CheckBox";
 import { useEffect } from "react";
 import { useAtom } from "jotai";
-import { jotaiTodo } from "../atoms/JotaiAtoms";
+import { jotaiSearchValue, jotaiTodo } from "../atoms/JotaiAtoms";
 import { todosVar } from "../graphql/variables";
 
 export function TableDemo() {
   const [todos, setTodos] = useAtom(jotaiTodo);
+  const [searchResult] = useAtom(jotaiSearchValue);
   const { loading, error, data } = useQuery(GET_TODOS_QUERY, { ...todosVar });
 
   useEffect(() => {
@@ -29,6 +30,13 @@ export function TableDemo() {
   if (loading) return <p>Loading</p>;
   if (error) return <p>Ohh ohh something went wrong</p>;
 
+  const filteredTodos = todos.filter((todo) => {
+    return JSON.stringify(todo)
+      .toLowerCase()
+      .includes(searchResult.toLocaleLowerCase());
+  });
+
+  console.log("filteredTodos ", searchResult);
   return (
     <div className="bg-slate-950 text-white p-10 rounded-lg h-[75vh] overflow-scroll">
       <Table>
@@ -41,7 +49,7 @@ export function TableDemo() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {todos.map((todo: Todo, index: number) => (
+          {filteredTodos.map((todo: Todo, index: number) => (
             <TableRow
               key={index}
               className=" hover:bg-slate-900 border-b-2 border-slate-800"

@@ -8,3 +8,4 @@ const todoPayload = {
   name: "",
 };
 export const jotaiTodo = atom<Todo[]>([{ ...todoPayload }]);
+export const jotaiSearchValue = atom("");
