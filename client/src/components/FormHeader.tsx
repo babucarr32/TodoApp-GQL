@@ -4,10 +4,14 @@ import { jotaiSwitchForm } from "../atoms/JotaiAtoms";
 import { useAtom } from "jotai";
 
 function FormHeader() {
-  const [isLogin, setIsLogin] = useAtom(jotaiSwitchForm);
+  const [, setIsLogin] = useAtom(jotaiSwitchForm);
 
   const handleSwitchForm = (name: string) => {
-    setIsLogin(true);
+    if (name == "signIn") {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
     console.log(name);
   };
   return (

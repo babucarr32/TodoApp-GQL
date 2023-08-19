@@ -20,6 +20,7 @@ function FormContainer() {
       [e.target.name]: e.target.value,
     }));
   };
+  //   console.log("is log in is ", isLogin);
 
   return (
     <form
@@ -32,12 +33,17 @@ function FormContainer() {
         className="absolute w-full top-0"
       />
       <div className="relative flex flex-col gap-3 items-center w-full">
-        <p className="text-center text-[2em] font-bold mb-5"> Sign up</p>
-        <AppInput
-          onChange={(e) => handleOnchange(e)}
-          placeholder="Full name"
-          name="fullName"
-        />
+        <p className="text-center text-[2em] font-bold mb-5">
+          {" "}
+          {isLogin ? "Sign in" : "Sign up"}
+        </p>
+        {!isLogin && (
+          <AppInput
+            onChange={(e) => handleOnchange(e)}
+            placeholder="Full name"
+            name="fullName"
+          />
+        )}
         <AppInput
           onChange={(e) => handleOnchange(e)}
           placeholder="youremail@gmail.com"
@@ -48,14 +54,16 @@ function FormContainer() {
           placeholder="Password"
           name="password"
         />
-        <AppInput
-          onChange={(e) => handleOnchange(e)}
-          placeholder="Re-password"
-          name="rePassword"
-        />
+        {!isLogin && (
+          <AppInput
+            onChange={(e) => handleOnchange(e)}
+            placeholder="Re-password"
+            name="rePassword"
+          />
+        )}
         <AppButton
           className="bg-white h-[60px] text-black w-full rounded-lg font-bold"
-          text="Sign up"
+          text={isLogin ? "Sign in" : "Sign up"}
         />
         <div className="bg-white h-[60px] flex pl-3 gap-3 items-center w-full rounded-lg">
           <img className="w-[32px]" src="/icons/google.svg" alt="" />
