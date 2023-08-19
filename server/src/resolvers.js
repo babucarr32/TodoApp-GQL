@@ -9,6 +9,7 @@ import { loginUser } from "./graphql/mutations/loginUser.js";
 import { createTodo } from "./graphql/mutations/createTodo.js";
 import { deleteTodo } from "./graphql/mutations/deleteTodo.js";
 import { editTodo } from "./graphql/mutations/editTodo.js";
+import { handleVerifyToken } from "./utils/VerifyToken.js";
 
 const resolvers = {
   Query: {
@@ -27,6 +28,11 @@ const resolvers = {
         await Todo.updateOne({ _id: ID }, { completed: completed })
       ).modifiedCount;
       return wasUpdated;
+    },
+    async verifyJWTToken(_, { token }, context) {
+      // return handleVerifyToken(token);
+      console.log(context.req.headers.authorization);
+      return true;
     },
   },
 };

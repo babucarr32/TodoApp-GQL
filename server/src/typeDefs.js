@@ -63,6 +63,7 @@ type Mutation{
     deleteTodo(ID: ID!): Boolean
     editTodo(ID: ID!, todoInput: TodoInput): Boolean
     changeStatus(ID: ID!, completedInput:CompletedInput): Boolean
+    verifyJWTToken(token: String): Boolean
 }
 `;
 
