@@ -38,3 +38,12 @@ export const CHANGE_STATUS = gql`
     changeStatus(ID: $id, completedInput: $completedInput)
   }
 `;
+
+export const CREATE_USER = gql`
+mutation Mutation($userInput: UserInput) {
+  createUser(userInput: $userInput) {
+    message
+  }
+}
+
+`
