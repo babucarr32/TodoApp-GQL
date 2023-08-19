@@ -40,10 +40,20 @@ export const CHANGE_STATUS = gql`
 `;
 
 export const CREATE_USER = gql`
-mutation Mutation($userInput: UserInput) {
-  createUser(userInput: $userInput) {
-    message
+  mutation Mutation($userInput: UserInput) {
+    createUser(userInput: $userInput) {
+      message
+    }
+  }
+`;
+
+export const LOGIN_USER = gql`
+mutation Mutation($loginInput: Login) {
+  loginUser(loginInput: $loginInput) {
+    accessToken
+    email
+    fullName
+    id
   }
 }
-
-`
+`;

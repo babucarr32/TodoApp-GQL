@@ -4,14 +4,16 @@ import { handleSignup } from "../actions/handleSignup";
 import AppInput from "./AppInput";
 import { signupPayload } from "../variables/vars";
 import { useMutation } from "@apollo/client";
-import { CREATE_USER } from "../graphql/query";
+import { CREATE_USER, LOGIN_USER } from "../graphql/query";
 import AppButton from "./AppButton";
 import { useAtom } from "jotai";
 import { jotaiSwitchForm } from "../atoms/JotaiAtoms";
 
 function FormContainer() {
-  const [signupUser] = useMutation(CREATE_USER);
+  const [signUpUser] = useMutation(CREATE_USER);
+  const [signInUser] = useMutation(LOGIN_USER);
   const [signUpForm, setSignUpForm] = useState<SignUpType>(signupPayload);
+
   const [isLogin] = useAtom(jotaiSwitchForm);
 
   const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,11 +22,12 @@ function FormContainer() {
       [e.target.name]: e.target.value,
     }));
   };
-  //   console.log("is log in is ", isLogin);
 
   return (
     <form
-      onSubmit={(e) => handleSignup(e, signUpForm, signupUser, isLogin)}
+      onSubmit={(e) =>
+        handleSignup(e, signUpForm, signUpUser, signInUser, isLogin)
+      }
       className="flex flex-col items-center w-full bg-slate-950 p-10 rounded-xl relative"
     >
       <img
