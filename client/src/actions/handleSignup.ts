@@ -9,7 +9,6 @@ export const handleSignup = async (
 ) => {
   e.preventDefault();
   if (isLogin) {
-    console.log("Log in");
     const result = await signinUserFunc({
       variables: {
         loginInput: {

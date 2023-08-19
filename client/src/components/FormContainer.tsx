@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SignUpType } from "../Types/SignupType";
 import { handleSignup } from "../actions/handleSignup";
 import AppInput from "./AppInput";
@@ -8,19 +8,35 @@ import { CREATE_USER, LOGIN_USER } from "../graphql/query";
 import AppButton from "./AppButton";
 import { useAtom } from "jotai";
 import { jotaiSwitchForm } from "../atoms/JotaiAtoms";
+import { ErrorType } from "../Types/TodoType";
 
 function FormContainer() {
   const [signUpUser] = useMutation(CREATE_USER);
-  const [signInUser] = useMutation(LOGIN_USER);
+  const [signInUser, { data, loading, error }] = useMutation(LOGIN_USER);
   const [signUpForm, setSignUpForm] = useState<SignUpType>(signupPayload);
+  const [errorMsg, setErrorMsg] = useState<ErrorType>({ message: "" });
 
   const [isLogin] = useAtom(jotaiSwitchForm);
+
+  useEffect(() => {
+    if (data) {
+      localStorage.setItem("todoToolkit", data.loginUser.accessToken);
+    }
+    if (error) {
+      setErrorMsg({
+        message: "Ohh oh, something has gone wrong!",
+      });
+    }
+  }, [data, loading, error]);
 
   const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSignUpForm((form) => ({
       ...form,
       [e.target.name]: e.target.value,
     }));
+    setErrorMsg({
+      message: "",
+    });
   };
 
   return (
@@ -40,6 +56,9 @@ function FormContainer() {
           {" "}
           {isLogin ? "Sign in" : "Sign up"}
         </p>
+        {errorMsg.message && (
+          <p className="text-red-500 mb-5">{errorMsg.message}</p>
+        )}
         {!isLogin && (
           <AppInput
             onChange={(e) => handleOnchange(e)}
@@ -65,8 +84,11 @@ function FormContainer() {
           />
         )}
         <AppButton
-          className="bg-white h-[60px] text-black w-full rounded-lg font-bold"
+          className={`bg-white h-[60px] text-black w-full rounded-lg font-bold ${
+            loading && "bg-slate-500"
+          }`}
           text={isLogin ? "Sign in" : "Sign up"}
+          sendingData={loading}
         />
         <div className="bg-white h-[60px] flex pl-3 gap-3 items-center w-full rounded-lg">
           <img className="w-[32px]" src="/icons/google.svg" alt="" />

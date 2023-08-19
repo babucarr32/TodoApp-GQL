@@ -9,3 +9,6 @@ export interface Todo {
 export interface AddTodoType {
   description: string;
 }
+export interface ErrorType {
+  message: string;
+}
