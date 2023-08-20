@@ -17,8 +17,7 @@ export const handleSignup = async (
         },
       },
     });
-
-    console.log(result);
+    return result;
   } else {
     const result = await signupUserFunc({
       variables: {
@@ -27,5 +26,6 @@ export const handleSignup = async (
         },
       },
     });
+    return result;
   }
 };

@@ -1,28 +1,35 @@
 import { useEffect, useState } from "react";
 import { TableDemo } from "./components/Table";
 import { ComboboxDemo } from "./components/ComboBox";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import AddTodo from "./components/AddTodo";
 import SearchTodoContainer from "./components/SearchTodoContainer";
 import Login from "./components/Login";
-
-const client = new ApolloClient({
-  uri: "http://localhost:3000/graphql",
-  cache: new InMemoryCache(),
-});
+import APOLLOProvider from "./providers/ApolloProvider";
+import { VERIFY_USER_TOKEN } from "./graphql/query";
+import { useMutation } from "@apollo/client";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState<string>("");
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [verifyToken] = useMutation(VERIFY_USER_TOKEN);
 
   useEffect(() => {
-    const result = localStorage.getItem("todoToolkit");
-    if (result) {
-      setIsAuthenticated(result);
-    }
+    const token = localStorage.getItem("todoToolkit");
+
+    const handleVerifyToken = async () => {
+      if (token) {
+        const result = await verifyToken({
+          variables: {
+            token: token,
+          },
+        });
+        setIsAuthenticated(result as any);
+      }
+    };
+    handleVerifyToken();
   }, []);
 
   return (
-    <ApolloProvider client={client}>
+    <APOLLOProvider>
       {!isAuthenticated ? (
         <Login />
       ) : (
@@ -44,7 +51,7 @@ function App() {
           </div>
         </div>
       )}
-    </ApolloProvider>
+    </APOLLOProvider>
   );
 }
 

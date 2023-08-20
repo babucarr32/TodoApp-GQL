@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
-export const handleVerifyToken = (context) => {
+export const handleVerifyToken = (token) => {
   // const authHeader = context.req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split("Bearer ")[1];
+  if (token) {
+    // const token = authHeader.split("Bearer ")[1];
     if (token) {
       return jwt.verify(
         token,

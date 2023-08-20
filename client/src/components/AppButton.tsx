@@ -13,8 +13,6 @@ const AppButton: React.FC<AppButtonType> = ({
   onClick,
   sendingData,
 }) => {
-  console.log("sendingData ", sendingData);
-
   return (
     <button
       className={className}

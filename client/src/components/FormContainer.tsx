@@ -19,7 +19,7 @@ function FormContainer() {
   const [isLogin] = useAtom(jotaiSwitchForm);
 
   useEffect(() => {
-    if (data) {
+    if (data?.loginUser.accessToken) {
       localStorage.setItem("todoToolkit", data.loginUser.accessToken);
     }
     if (error) {
@@ -38,12 +38,18 @@ function FormContainer() {
       message: "",
     });
   };
+  const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+    await handleSignup(e, signUpForm, signUpUser, signInUser, isLogin);
+    if (!data?.loginUser?.accessToken) {
+      setErrorMsg({
+        message: "Incorrect username or password.",
+      });
+    }
+  };
 
   return (
     <form
-      onSubmit={(e) =>
-        handleSignup(e, signUpForm, signUpUser, signInUser, isLogin)
-      }
+      onSubmit={(e) => submitForm(e)}
       className="flex flex-col items-center w-full bg-slate-950 p-10 rounded-xl relative"
     >
       <img
