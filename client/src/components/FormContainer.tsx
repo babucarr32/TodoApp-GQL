@@ -39,14 +39,14 @@ function FormContainer() {
     });
   };
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
-    const result = await handleSignup(
+    const res = await handleSignup(
       e,
       signUpForm,
       signUpUser,
       signInUser,
       isLogin
     );
-    if (!result?.data.loginUser?.accessToken) {
+    if (!res?.data.loginUser?.accessToken) {
       setErrorMsg({
         message: "Incorrect username or password.",
       });

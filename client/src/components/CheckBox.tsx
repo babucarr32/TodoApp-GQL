@@ -9,7 +9,6 @@ const AppCheckbox: React.FC<{
   handleChecked: Function;
 }> = ({ id, status, handleChecked }) => {
   const [isChecked, setIsChecked] = useState(status);
-  console.log("isChecked ", isChecked);
 
   return (
     <div className="relative">
