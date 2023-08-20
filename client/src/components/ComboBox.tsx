@@ -17,6 +17,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../../@/components/ui/popover";
+import { useAtom } from "jotai";
+import { jotaiSecTodo, jotaiTodo } from "../atoms/JotaiAtoms";
 
 const frameworks = [
   {
@@ -40,6 +42,29 @@ const frameworks = [
 export function ComboboxDemo() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
+  const [, setTodos] = useAtom(jotaiTodo);
+  const [secTodos, setSecTodos] = useAtom(jotaiSecTodo);
+
+  const handleFilterTodo = (value: string) => {
+    if (value == "active") {
+      const active = secTodos.filter((todo) => todo.completed == false);
+      setTodos(active);
+      console.log("Selected ", active);
+    }
+    if (value == "all") {
+      setTodos(secTodos);
+    }
+    if (value == "completed") {
+      const completed = secTodos.filter((todo) => todo.completed !== false);
+      setTodos(completed);
+    }
+    if (value == "clear completed") {
+      const completed = secTodos.filter((todo) => todo.completed == false);
+      setTodos(completed);
+      setSecTodos(completed);
+      console.log("completed ");
+    }
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -71,6 +96,7 @@ export function ComboboxDemo() {
                 onSelect={(currentValue) => {
                   setValue(currentValue === value ? "" : currentValue);
                   setOpen(false);
+                  handleFilterTodo(currentValue);
                 }}
               >
                 <Check

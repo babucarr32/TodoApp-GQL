@@ -16,6 +16,7 @@ import {
   jotaiAddTodo,
   jotaiEditTodo,
   jotaiSearchValue,
+  jotaiSecTodo,
   jotaiTodo,
   jotaiTodoId,
 } from "../atoms/JotaiAtoms";
@@ -26,6 +27,7 @@ import Error from "./Error";
 
 export function TableDemo() {
   const [todos, setTodos] = useAtom(jotaiTodo);
+  const [, setSecTodos] = useAtom(jotaiSecTodo);
   const [searchResult] = useAtom(jotaiSearchValue);
   const { loading, error, data } = useQuery(GET_TODOS_QUERY, { ...todosVar });
   const [changeStatus] = useMutation(CHANGE_STATUS);
@@ -34,17 +36,14 @@ export function TableDemo() {
   const [, setTodoId] = useAtom(jotaiTodoId);
   const [, setIsEditTodo] = useAtom(jotaiEditTodo);
 
+  const filteredTodos = handleFilterSearch(todos, searchResult);
+
   useEffect(() => {
-    const handleSetTodo = () => {
-      if (data) setTodos(data.getTodos);
-    };
-    handleSetTodo();
+    if (data) setTodos(data.getTodos), setSecTodos(data.getTodos);
   }, [data]);
 
   if (loading) return <BgLoading />;
   if (error) return <Error />;
-
-  const filteredTodos = handleFilterSearch(todos, searchResult);
 
   const handleEditTodo = (id: string) => {
     const result = todos.find((todo) => todo.id == id);
