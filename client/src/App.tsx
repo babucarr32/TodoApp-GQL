@@ -17,7 +17,6 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("todoToolkit");
-
     const handleVerifyToken = async () => {
       if (token) {
         const result = await verifyToken({
@@ -47,7 +46,7 @@ function App() {
                 text="Logout"
                 className="bg-white h-[50px] text-black w-24 rounded-lg font-bold absolute right-5 top-5 hover:bg-slate-200"
               />
-              <div className="flex justify-between gap-3">
+              <div className="flex justify-between gap-3 pt-5">
                 <AddTodo />
                 <SearchTodoContainer />
               </div>

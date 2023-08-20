@@ -9,18 +9,9 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import Login from "./components/Login.tsx";
 
 const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route
-      path="/"
-      element={<App />}
-      // loader={rootLoader}
-      // action={rootAction}
-      // errorElement={<ErrorPage />}
-    ></Route>
-  )
+  createRoutesFromElements(<Route path="/" element={<App />}></Route>)
 );
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

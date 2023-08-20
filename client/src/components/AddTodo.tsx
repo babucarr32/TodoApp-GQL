@@ -9,6 +9,7 @@ import {
   jotaiTodoId,
 } from "../atoms/JotaiAtoms";
 import { Todo } from "../Types/TodoType";
+// import style from "../styles/searchLoad.module.css";
 
 const AddTodo: React.FC = () => {
   const [todo, setTodo] = useAtom(jotaiAddTodo);
@@ -59,6 +60,7 @@ const AddTodo: React.FC = () => {
     if (isEditTodo) {
       handleEditTodo();
     } else {
+      handleResetForm();
       await createTodo({
         variables: {
           todoInput: {
@@ -69,17 +71,24 @@ const AddTodo: React.FC = () => {
     }
   };
 
-  if (loading) return <p className="text-white text-[3em]">Loading....</p>;
-
   return (
-    <form className="w-full" onSubmit={(e) => handleSubmit(e)}>
-      <input
-        type="text"
-        placeholder="Add todo..."
-        className="w-full p-3 rounded-lg bg-transparent border-2 border-slate-800 outline-none text-white mt-5"
-        value={todo.description}
-        onChange={(e) => handleOnchange(e)}
-      />
+    <form className="w-full " onSubmit={(e) => handleSubmit(e)}>
+      <div className="relative">
+        <input
+          type="text"
+          placeholder="Add todo..."
+          className="w-full p-3 rounded-lg bg-transparent border-2 border-slate-800 outline-none text-white "
+          value={todo.description}
+          onChange={(e) => handleOnchange(e)}
+        />
+        {loading && (
+          <img
+            className={`absolute right-3 top-[30%]  w-5 h-5 searchLoad`}
+            src="/icons/loading.svg"
+            alt=""
+          />
+        )}
+      </div>
     </form>
   );
 };
