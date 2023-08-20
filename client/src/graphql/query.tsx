@@ -48,12 +48,18 @@ export const CREATE_USER = gql`
 `;
 
 export const LOGIN_USER = gql`
-mutation Mutation($loginInput: Login) {
-  loginUser(loginInput: $loginInput) {
-    accessToken
-    email
-    fullName
-    id
+  mutation Mutation($loginInput: Login) {
+    loginUser(loginInput: $loginInput) {
+      accessToken
+      email
+      fullName
+      id
+    }
   }
-}
+`;
+
+export const VERIFY_USER_TOKEN = gql`
+  mutation Mutation($token: String) {
+    verifyJWTToken(token: $token)
+  }
 `;
