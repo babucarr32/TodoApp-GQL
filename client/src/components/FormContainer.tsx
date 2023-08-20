@@ -9,24 +9,25 @@ import AppButton from "./AppButton";
 import { useAtom } from "jotai";
 import { jotaiSwitchForm } from "../atoms/JotaiAtoms";
 import { ErrorType } from "../Types/TodoType";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 function FormContainer() {
   const [signUpUser] = useMutation(CREATE_USER);
   const [signInUser, { data, loading, error }] = useMutation(LOGIN_USER);
   const [signUpForm, setSignUpForm] = useState<SignUpType>(signupPayload);
   const [errorMsg, setErrorMsg] = useState<ErrorType>({ message: "" });
-
+  const [setLocalStorage] = useLocalStorage();
   const [isLogin] = useAtom(jotaiSwitchForm);
+
+  const handleSetErrMsg = (msg: string) => {
+    setErrorMsg({ message: msg });
+  };
 
   useEffect(() => {
     if (data?.loginUser.accessToken) {
-      localStorage.setItem("todoToolkit", data.loginUser.accessToken);
+      setLocalStorage("todoToolkit", data?.loginUser.accessToken);
     }
-    if (error) {
-      setErrorMsg({
-        message: "Ohh oh, something has gone wrong!",
-      });
-    }
+    if (error) handleSetErrMsg("Ohh oh, something has gone wrong!");
   }, [data, loading, error]);
 
   const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,10 +35,9 @@ function FormContainer() {
       ...form,
       [e.target.name]: e.target.value,
     }));
-    setErrorMsg({
-      message: "",
-    });
+    handleSetErrMsg("");
   };
+
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     const res = await handleSignup(
       e,
@@ -47,9 +47,7 @@ function FormContainer() {
       isLogin
     );
     if (!res?.data.loginUser?.accessToken) {
-      setErrorMsg({
-        message: "Incorrect username or password.",
-      });
+      handleSetErrMsg("Incorrect username or password.");
     } else {
       window.location.reload();
     }

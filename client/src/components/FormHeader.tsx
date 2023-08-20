@@ -7,13 +7,9 @@ function FormHeader() {
   const [, setIsLogin] = useAtom(jotaiSwitchForm);
 
   const handleSwitchForm = (name: string) => {
-    if (name == "signIn") {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-    console.log(name);
+    name == "signIn" ? setIsLogin(true) : setIsLogin(false);
   };
+
   return (
     <div className="flex justify-between w-full gap-3 bg-slate-800 p-3 shadow-lg rounded-xl h-[76px]">
       <AppButton

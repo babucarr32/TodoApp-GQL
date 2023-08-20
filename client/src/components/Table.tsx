@@ -21,6 +21,8 @@ import {
 } from "../atoms/JotaiAtoms";
 import { todosVar } from "../graphql/variables";
 import { handleFilterSearch } from "../actions/handleFilterSearch";
+import BgLoading from "./BgLoading";
+import Error from "./Error";
 
 export function TableDemo() {
   const [todos, setTodos] = useAtom(jotaiTodo);
@@ -39,8 +41,8 @@ export function TableDemo() {
     handleSetTodo();
   }, [data]);
 
-  if (loading) return <p>Loading</p>;
-  if (error) return <p>Ohh ohh something went wrong</p>;
+  if (loading) return <BgLoading />;
+  if (error) return <Error />;
 
   const filteredTodos = handleFilterSearch(todos, searchResult);
 
@@ -87,7 +89,7 @@ export function TableDemo() {
   };
 
   return (
-    <div className="bg-slate-950 text-white p-10 rounded-lg h-[75vh] overflow-scroll">
+    <div className="bg-slate-950 text-white p-10 rounded-lg h-[75vh] overflow-scroll relative">
       {!filteredTodos.length ? (
         <div className="relative h-full w-full">
           <p className="text-[3em] text-center absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">

@@ -7,8 +7,7 @@ function Login() {
     <div className="bg-slate-900 relative text-white h-[100vh]">
       <img
         className="w-full h-full object-cover "
-        src="
-  /images/loginBg.svg"
+        src="/images/loginBg.svg"
         alt=""
       />
       <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full px-80">

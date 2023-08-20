@@ -9,7 +9,6 @@ import {
   jotaiTodoId,
 } from "../atoms/JotaiAtoms";
 import { Todo } from "../Types/TodoType";
-// import style from "../styles/searchLoad.module.css";
 
 const AddTodo: React.FC = () => {
   const [todo, setTodo] = useAtom(jotaiAddTodo);
@@ -55,6 +54,13 @@ const AddTodo: React.FC = () => {
     setTodo({ description: "" });
   };
 
+  const handleAddTodoToDB = (result: any) => {
+    if (result) {
+      const newTodos = [result.data.createTodo as Todo, ...todos];
+      setTodos(newTodos);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isEditTodo) {
@@ -68,10 +74,7 @@ const AddTodo: React.FC = () => {
           },
         },
       });
-      if (result) {
-        const newTodos = [result.data.createTodo as Todo, ...todos];
-        setTodos(newTodos);
-      }
+      handleAddTodoToDB(result);
     }
   };
 
