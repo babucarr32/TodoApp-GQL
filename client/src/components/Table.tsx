@@ -7,7 +7,7 @@ import {
   TableRow,
 } from "../../@/components/ui/table";
 import { useMutation, useQuery } from "@apollo/client";
-import { CHANGE_STATUS, DELETE_TODO, GET_TODOS_QUERY } from "../graphql/query";
+import { CHANGE_STATUS, GET_TODOS_QUERY } from "../graphql/query";
 import { Todo } from "../Types/TodoType";
 import AppCheckbox from "./CheckBox";
 import { useEffect } from "react";
@@ -24,6 +24,7 @@ import { todosVar } from "../graphql/variables";
 import { handleFilterSearch } from "../actions/handleFilterSearch";
 import BgLoading from "./BgLoading";
 import Error from "./Error";
+import useDeleteTodo from "../hooks/useDeleteTodo";
 
 export function TableDemo() {
   const [todos, setTodos] = useAtom(jotaiTodo);
@@ -31,10 +32,10 @@ export function TableDemo() {
   const [searchResult] = useAtom(jotaiSearchValue);
   const { loading, error, data } = useQuery(GET_TODOS_QUERY, { ...todosVar });
   const [changeStatus] = useMutation(CHANGE_STATUS);
-  const [deleteTodo] = useMutation(DELETE_TODO);
   const [, setEditTodo] = useAtom(jotaiAddTodo);
   const [, setTodoId] = useAtom(jotaiTodoId);
   const [, setIsEditTodo] = useAtom(jotaiEditTodo);
+  const [deleteTodo] = useDeleteTodo();
 
   const filteredTodos = handleFilterSearch(todos, searchResult);
 
@@ -58,11 +59,7 @@ export function TableDemo() {
       const newTodo = [...todos];
       newTodo.splice(newTodo.indexOf(result), 1);
       setTodos(newTodo);
-      await deleteTodo({
-        variables: {
-          id: id,
-        },
-      });
+      await deleteTodo(id);
     }
   };
 
