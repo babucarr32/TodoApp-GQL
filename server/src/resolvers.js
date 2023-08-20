@@ -29,10 +29,8 @@ const resolvers = {
       ).modifiedCount;
       return wasUpdated;
     },
-    async verifyJWTToken(_, { token }, context) {
-      // return handleVerifyToken(token);
-      console.log(context.req.headers.authorization);
-      return true;
+    async verifyJWTToken(_, { token }) {
+      return handleVerifyToken(token);
     },
   },
 };

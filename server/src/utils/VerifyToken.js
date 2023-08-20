@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 
 export const handleVerifyToken = (context) => {
-  const authHeader = context.req.headers.authorization;
+  // const authHeader = context.req.headers.authorization;
   if (authHeader) {
     const token = authHeader.split("Bearer ")[1];
     if (token) {
