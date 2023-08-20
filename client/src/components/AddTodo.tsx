@@ -61,13 +61,17 @@ const AddTodo: React.FC = () => {
       handleEditTodo();
     } else {
       handleResetForm();
-      await createTodo({
+      const result = await createTodo({
         variables: {
           todoInput: {
             description: `${todo.description}`,
           },
         },
       });
+      if (result) {
+        const newTodos = [result.data.createTodo as Todo, ...todos];
+        setTodos(newTodos);
+      }
     }
   };
 
