@@ -50,6 +50,8 @@ function FormContainer() {
       setErrorMsg({
         message: "Incorrect username or password.",
       });
+    } else {
+      window.location.reload();
     }
   };
 
