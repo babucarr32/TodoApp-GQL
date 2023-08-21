@@ -56,7 +56,7 @@ function FormContainer() {
   return (
     <form
       onSubmit={(e) => submitForm(e)}
-      className="flex flex-col items-center w-full bg-slate-950 p-10 rounded-xl relative"
+      className="flex flex-col items-center w-full bg-slate-950 p-10 rounded-2xl relative"
     >
       <img
         src="/images/loginWave.svg"
