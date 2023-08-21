@@ -24,7 +24,7 @@ function App() {
             token: token,
           },
         });
-        setIsAuthenticated(result as any);
+        setIsAuthenticated(result.data.verifyJWTToken as any);
       }
     };
     handleVerifyToken();

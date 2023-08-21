@@ -6,7 +6,7 @@ export const handleGenerateToken = (token) => {
     {
       data: token,
     },
-    "process.env.AccessToken",
-    { expiresIn: "2m" }
+    process.env.AccessToken,
+    { expiresIn: "60m" }
   );
 };
