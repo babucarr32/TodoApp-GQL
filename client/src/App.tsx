@@ -35,23 +35,27 @@ function App() {
       {!isAuthenticated ? (
         <Login />
       ) : (
-        <div className="h-[100vh] flex items-center w-full justify-center bg-slate-900">
-          <div className="w-[70%]">
-            <div className="p-5 bg-slate-950 my-3 rounded-lg relative">
-              <p className="text-[2em] font-extrabold text-center text-white">
-                A list of Todo's
-              </p>
-              <AppButton
-                onClick={LogOut}
-                text="Logout"
-                className="bg-white h-[50px] text-black w-24 rounded-lg font-bold absolute right-5 top-5 hover:bg-slate-200"
-              />
-              <div className="flex w-full justify-between gap-10 pt-5 text-white">
+        <div className="min-h-[100vh] relative flex items-center w-full justify-center bg-slate-900 p-5">
+          <div className="w-full md:w-[70%] overflow-scroll">
+            <div className="  p-5 bg-slate-950 my-3 rounded-lg relative ">
+              <div className="flex items-center justify-between">
+                <p className="text-[1.25em] md:text-[2em] font-extrabold text-center text-white">
+                  A list of Todo's
+                </p>
+                <AppButton
+                  onClick={LogOut}
+                  text="Logout"
+                  className="bg-white h-[50px] text-black w-24 rounded-lg font-bold md:absolute md:right-5 m:top-5 hover:bg-slate-200"
+                />
+              </div>
+              <div className="flex flex-col md:flex-row w-full justify-between gap-3 md:gap-10 pt-5 text-white">
                 <AddTodo />
                 <SearchTodoContainer />
               </div>
             </div>
-            <TableDemo />
+            <div className="w-full overflow-scroll">
+              <TableDemo />
+            </div>
             <div className="my-3">
               <ComboboxDemo />
             </div>

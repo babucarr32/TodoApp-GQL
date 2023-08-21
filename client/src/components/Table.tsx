@@ -93,7 +93,7 @@ export function TableDemo() {
   };
 
   return (
-    <div className="bg-slate-950 text-white p-10 rounded-lg h-[75vh] overflow-scroll relative">
+    <div className="w-[1000px] md:w-full bg-slate-950 text-white p-10 rounded-lg h-[75vh] overflow-scroll relative">
       {isModalOpen && (
         <div className="absolute w-full h-full bg-slate-500 opacity-5 left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"></div>
       )}
