@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
-
 import { cn } from "../../@/lib/utils";
 import { Button } from "../../@/components/ui/button";
 import {
@@ -19,50 +18,48 @@ import {
 } from "../../@/components/ui/popover";
 import { useAtom } from "jotai";
 import { jotaiSecTodo, jotaiTodo } from "../atoms/JotaiAtoms";
-
-const frameworks = [
-  {
-    value: "completed",
-    label: "Completed",
-  },
-  {
-    value: "active",
-    label: "Active",
-  },
-  {
-    value: "all",
-    label: "All",
-  },
-  {
-    value: "clear completed",
-    label: "Clear Completed",
-  },
-];
+import useDeleteTodo from "../hooks/useDeleteTodo";
+import { frameworks } from "../variables/vars";
 
 export function ComboboxDemo() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
   const [, setTodos] = useAtom(jotaiTodo);
   const [secTodos, setSecTodos] = useAtom(jotaiSecTodo);
+  const [deleteTodo] = useDeleteTodo();
 
-  const handleFilterTodo = (value: string) => {
+  const setActiveTodos = () => {
+    const active = secTodos.filter((todo) => todo.completed == false);
+    setTodos(active);
+  };
+
+  const setCompletedTodos = () => {
+    const completed = secTodos.filter((todo) => todo.completed !== false);
+    setTodos(completed);
+  };
+
+  const setClearTodos = () => {
+    const todosToDelete = secTodos.filter((todo) => todo.completed !== false);
+    const completed = secTodos.filter((todo) => todo.completed == false);
+    setTodos(completed);
+    setSecTodos(completed);
+    todosToDelete.forEach(async (todo) => {
+      await deleteTodo(todo.id);
+    });
+  };
+
+  const handleFilterTodo = async (value: string) => {
     if (value == "active") {
-      const active = secTodos.filter((todo) => todo.completed == false);
-      setTodos(active);
-      console.log("Selected ", active);
+      setActiveTodos();
     }
     if (value == "all") {
       setTodos(secTodos);
     }
     if (value == "completed") {
-      const completed = secTodos.filter((todo) => todo.completed !== false);
-      setTodos(completed);
+      setCompletedTodos();
     }
     if (value == "clear completed") {
-      const completed = secTodos.filter((todo) => todo.completed == false);
-      setTodos(completed);
-      setSecTodos(completed);
-      console.log("completed ");
+      setClearTodos();
     }
   };
 

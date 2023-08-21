@@ -10,7 +10,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { CHANGE_STATUS, GET_TODOS_QUERY } from "../graphql/query";
 import { Todo } from "../Types/TodoType";
 import AppCheckbox from "./CheckBox";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import {
   jotaiAddTodo,
@@ -25,6 +25,7 @@ import { handleFilterSearch } from "../actions/handleFilterSearch";
 import BgLoading from "./BgLoading";
 import Error from "./Error";
 import useDeleteTodo from "../hooks/useDeleteTodo";
+import Modal from "./Modal";
 
 export function TableDemo() {
   const [todos, setTodos] = useAtom(jotaiTodo);
@@ -36,6 +37,7 @@ export function TableDemo() {
   const [, setTodoId] = useAtom(jotaiTodoId);
   const [, setIsEditTodo] = useAtom(jotaiEditTodo);
   const [deleteTodo] = useDeleteTodo();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filteredTodos = handleFilterSearch(todos, searchResult);
 
@@ -68,10 +70,10 @@ export function TableDemo() {
     if (result) {
       const result2 = { ...result };
       result2.completed = !status;
-
       const newTodos = [...todos];
       newTodos.splice(newTodos.indexOf(result), 1, result2);
       setTodos([...newTodos]);
+      setSecTodos([...newTodos]);
       await changeStatus({
         variables: {
           id: id,
@@ -86,6 +88,10 @@ export function TableDemo() {
 
   return (
     <div className="bg-slate-950 text-white p-10 rounded-lg h-[75vh] overflow-scroll relative">
+      {isModalOpen && (
+        <div className="absolute w-full h-full bg-slate-500 opacity-5 left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"></div>
+      )}
+      <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       {!filteredTodos.length ? (
         <div className="relative h-full w-full">
           <p className="text-[3em] text-center absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
@@ -120,7 +126,10 @@ export function TableDemo() {
                 <TableCell className="text-left">{todo.createdAt}</TableCell>
                 <TableCell
                   className="text-left text-red-500 cursor-pointer"
-                  onClick={() => handleDeleteTodo(todo.id)}
+                  onClick={() => {
+                    // handleDeleteTodo(todo.id),
+                    setIsModalOpen(!isModalOpen);
+                  }}
                 >
                   Delete
                 </TableCell>
