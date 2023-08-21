@@ -34,7 +34,7 @@ export function TableDemo() {
   const { loading, error, data } = useQuery(GET_TODOS_QUERY, { ...todosVar });
   const [changeStatus] = useMutation(CHANGE_STATUS);
   const [, setEditTodo] = useAtom(jotaiAddTodo);
-  const [, setTodoId] = useAtom(jotaiTodoId);
+  const [todoId, setTodoId] = useAtom(jotaiTodoId);
   const [, setIsEditTodo] = useAtom(jotaiEditTodo);
   const [deleteTodo] = useDeleteTodo();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -93,7 +93,11 @@ export function TableDemo() {
       {isModalOpen && (
         <div className="absolute w-full h-full bg-slate-500 opacity-5 left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"></div>
       )}
-      <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <Modal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        cb={() => handleDeleteTodo(todoId)}
+      />
       {!filteredTodos.length ? (
         <div className="relative h-full w-full">
           <p className="text-[3em] text-center absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
@@ -132,7 +136,7 @@ export function TableDemo() {
                 <TableCell
                   className="text-left text-red-500 cursor-pointer"
                   onClick={() => {
-                    // handleDeleteTodo(todo.id),
+                    setTodoId(todo.id);
                     setIsModalOpen(!isModalOpen);
                   }}
                 >

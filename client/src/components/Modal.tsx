@@ -13,9 +13,10 @@ import {
 interface ModalType {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  cb?: Function;
 }
 
-const Modal: React.FC<ModalType> = ({ isModalOpen, setIsModalOpen }) => {
+const Modal: React.FC<ModalType> = ({ isModalOpen, setIsModalOpen, cb }) => {
   return (
     <Dialog
       open={isModalOpen}
@@ -37,6 +38,7 @@ const Modal: React.FC<ModalType> = ({ isModalOpen, setIsModalOpen }) => {
           <div className="w-full flex justify-between">
             <Button
               onClick={() => {
+                cb && cb();
                 setIsModalOpen(false);
               }}
               className="bg-red-500 h-10 w-20 rounded-lg outline-none mt-3"
