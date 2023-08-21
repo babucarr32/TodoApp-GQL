@@ -10,6 +10,8 @@ export interface Todo {
 
 export interface AddTodoType {
   description: string;
+  startTime: string;
+  endTime: string;
 }
 export interface ErrorType {
   message: string;

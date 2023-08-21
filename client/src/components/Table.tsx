@@ -51,7 +51,11 @@ export function TableDemo() {
 
   const handleEditTodo = (id: string) => {
     const result = todos.find((todo) => todo.id == id);
-    setEditTodo({ description: result?.description as string });
+    setEditTodo({
+      description: result?.description as string,
+      startTime: result?.startTime as string,
+      endTime: result?.endTime as string,
+    });
     setIsEditTodo(true);
     setTodoId(id);
   };
@@ -68,7 +72,6 @@ export function TableDemo() {
 
   const handleChecked = async (id: string, status: boolean, cb: Function) => {
     const result = todos.find((todo) => todo.id == id);
-    console.log(result);
 
     if (result) {
       const result2 = { ...result };

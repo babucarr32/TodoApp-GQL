@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import React from "react";
+import React, { useState } from "react";
 import { CREATE_TODO, EDIT_TODO } from "../graphql/query";
 import { useAtom } from "jotai";
 import {
@@ -19,18 +19,22 @@ const AddTodo: React.FC = () => {
   const [todoId, setTodoId] = useAtom(jotaiTodoId);
   const [todos, setTodos] = useAtom(jotaiTodo);
   const [, setSecTodos] = useAtom(jotaiSecTodo);
+  const [todoStartTime, setTodoStartTime] = useState<string>("");
+  const [todoEndTime, setTodoEndTime] = useState<string>("");
 
   const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let newTodo = { ...todo };
-    newTodo = { description: e.target.value };
+    const newTodo = {
+      ...todo,
+      [e.target.name]: e.target.value,
+    };
     setTodo(newTodo);
   };
 
   const handleEditTodo = async () => {
     const result = todos.find((todo) => todo.id == todoId);
     if (result) {
-      const result2 = { ...result };
-      result2.description = todo.description;
+      const result2 = { ...result, ...todo };
+      // result2.description = todo.description;
       const newTodo = [...todos];
       newTodo.splice(newTodo.indexOf(result), 1, result2);
       setTodos([...newTodo]);
@@ -45,6 +49,8 @@ const AddTodo: React.FC = () => {
         id: todoId,
         todoInput: {
           description: obj.description,
+          startTime: obj.startTime,
+          endTime: obj.endTime,
         },
       },
     });
@@ -53,7 +59,7 @@ const AddTodo: React.FC = () => {
   const handleResetForm = () => {
     setTodoId("");
     setIsEditing(false);
-    setTodo({ description: "" });
+    setTodo({ description: "", startTime: "", endTime: "" });
   };
 
   const handleAddTodoToDB = (result: any) => {
@@ -74,8 +80,8 @@ const AddTodo: React.FC = () => {
         variables: {
           todoInput: {
             description: `${todo.description}`,
-            endTime: e.target.startTime.value,
-            startTime: e.target.endTime.value,
+            endTime: `${todo.endTime}`,
+            startTime: `${todo.startTime}`,
           },
         },
       });
@@ -93,6 +99,7 @@ const AddTodo: React.FC = () => {
             className="w-full p-3 rounded-lg bg-transparent border-2 border-slate-800 outline-none text-white "
             value={todo.description}
             onChange={(e) => handleOnchange(e)}
+            name="description"
           />
           {loading && (
             <img
@@ -110,6 +117,10 @@ const AddTodo: React.FC = () => {
             type="time"
             id="startTime"
             name="startTime"
+            value={todo.startTime}
+            onChange={(e) => {
+              handleOnchange(e), setTodoStartTime(e.target.value);
+            }}
           />
         </div>
         <div className="flex items-center justify-center gap-3">
@@ -119,6 +130,10 @@ const AddTodo: React.FC = () => {
             type="time"
             id="endTime"
             name="endTime"
+            value={todo.endTime}
+            onChange={(e) => {
+              handleOnchange(e), setTodoEndTime(e.target.value);
+            }}
           />
         </div>
       </div>
