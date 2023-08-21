@@ -46,7 +46,7 @@ function App() {
                 text="Logout"
                 className="bg-white h-[50px] text-black w-24 rounded-lg font-bold absolute right-5 top-5 hover:bg-slate-200"
               />
-              <div className="flex justify-between gap-10 pt-5 text-white">
+              <div className="flex w-full justify-between gap-10 pt-5 text-white">
                 <AddTodo />
                 <SearchTodoContainer />
               </div>

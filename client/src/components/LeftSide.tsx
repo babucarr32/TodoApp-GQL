@@ -2,8 +2,8 @@ import React from "react";
 
 function LeftSide() {
   return (
-    <div className="w-[418px]">
-      <p className="text-[48px]">Todo + Toolkit</p>
+    <div className="w-full lg:w-[418px]">
+      <p className="text-[32px] text-center lg:text-[48px]">Todo + Toolkit</p>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim

@@ -102,13 +102,13 @@ function FormContainer() {
           text={isLogin ? "Sign in" : "Sign up"}
           sendingData={loading}
         />
-        <div className="bg-white h-[60px] flex pl-3 gap-3 items-center w-full rounded-lg">
+        {/* <div className="bg-white h-[60px] flex pl-3 gap-3 items-center w-full rounded-lg">
           <img className="w-[32px]" src="/icons/google.svg" alt="" />
           <AppButton
             className=" text-black font-bold"
             text="Continue with Google"
           />
-        </div>
+        </div> */}
       </div>
     </form>
   );
