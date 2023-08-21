@@ -40,7 +40,6 @@ export function TableDemo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filteredTodos = handleFilterSearch(todos, searchResult);
-  console.log(todos);
 
   useEffect(() => {
     if (data) setTodos(data.getTodos), setSecTodos(data.getTodos);

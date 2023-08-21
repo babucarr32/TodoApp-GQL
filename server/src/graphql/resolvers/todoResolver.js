@@ -8,7 +8,6 @@ export const todoResolver = {
       throw new Error("Invalid Authorization header.");
     } else {
       const newTodo = await Todo.findById(ID);
-      console.log(newTodo);
       return { ...newTodo._doc };
     }
   },

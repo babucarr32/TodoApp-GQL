@@ -43,12 +43,10 @@ passport.use(
 );
 
 passport.serializeUser(function (user, cb) {
-  console.log("serializeUser ", user);
   cb(null, user);
 });
 
 passport.deserializeUser(function (user, cb) {
-  console.log("Serialized data is ", user);
   cb(null, user);
 });
 
