@@ -64,7 +64,7 @@ const AddTodo: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | any) => {
     e.preventDefault();
     if (isEditTodo) {
       handleEditTodo();
@@ -74,6 +74,8 @@ const AddTodo: React.FC = () => {
         variables: {
           todoInput: {
             description: `${todo.description}`,
+            endTime: e.target.startTime.value,
+            startTime: e.target.endTime.value,
           },
         },
       });
@@ -83,21 +85,42 @@ const AddTodo: React.FC = () => {
 
   return (
     <form className="w-full " onSubmit={(e) => handleSubmit(e)}>
-      <div className="relative">
-        <input
-          type="text"
-          placeholder="Add todo..."
-          className="w-full p-3 rounded-lg bg-transparent border-2 border-slate-800 outline-none text-white "
-          value={todo.description}
-          onChange={(e) => handleOnchange(e)}
-        />
-        {loading && (
-          <img
-            className={`absolute right-3 top-[30%]  w-5 h-5 searchLoad`}
-            src="/icons/loading.svg"
-            alt=""
+      <div className="flex items-center w-full justify-between gap-3">
+        <div className="relative w-full">
+          <input
+            type="text"
+            placeholder="Add todo..."
+            className="w-full p-3 rounded-lg bg-transparent border-2 border-slate-800 outline-none text-white "
+            value={todo.description}
+            onChange={(e) => handleOnchange(e)}
           />
-        )}
+          {loading && (
+            <img
+              className={`absolute right-3 top-[30%]  w-5 h-5 searchLoad`}
+              src="/icons/loading.svg"
+              alt=""
+            />
+          )}
+        </div>
+
+        <div className="flex items-center justify-center gap-3">
+          <label>Starts</label>
+          <input
+            className="w-full flex items-center justify-center p-3 rounded-lg bg-transparent border-2 border-slate-800 outline-none text-white "
+            type="time"
+            id="startTime"
+            name="startTime"
+          />
+        </div>
+        <div className="flex items-center justify-center gap-3">
+          <label>Ends</label>
+          <input
+            className="w-full flex items-center justify-center p-3 rounded-lg bg-transparent border-2 border-slate-800 outline-none text-white "
+            type="time"
+            id="endTime"
+            name="endTime"
+          />
+        </div>
       </div>
     </form>
   );

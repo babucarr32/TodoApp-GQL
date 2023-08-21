@@ -30,11 +30,15 @@ type Todo{
   description: String,
   createdAt: String,
   completed: Boolean,
+  startTime: String,
+  endTime: String
 }
 
 "For creating todo"
 input TodoInput{
     description: String
+    startTime: String
+    endTime: String
 }
 
 "For Making todo status"

@@ -3,6 +3,8 @@ import { gql } from "@apollo/client";
 export const GET_TODOS_QUERY = gql`
   query GetTodos($amount: Int) {
     getTodos(amount: $amount) {
+      startTime
+      endTime
       completed
       createdAt
       description
@@ -18,6 +20,8 @@ export const CREATE_TODO = gql`
       completed
       createdAt
       description
+      startTime
+      endTime
     }
   }
 `;

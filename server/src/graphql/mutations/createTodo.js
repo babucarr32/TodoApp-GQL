@@ -1,13 +1,12 @@
 import Todo from "../../model/Todo.js";
 
 export const createTodo = {
-  async createTodo(_, { todoInput: { name, description } }) {
+  async createTodo(_, { todoInput: { startTime, endTime, description } }) {
     const createTodo = new Todo({
-      name: name,
+      startTime: startTime,
       description: description,
       createdAt: new Date().toISOString(),
-      thumbsUp: 0,
-      thumbsDown: 0,
+      endTime: endTime,
     });
     const res = await createTodo.save();
     return {

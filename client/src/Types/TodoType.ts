@@ -4,6 +4,8 @@ export interface Todo {
   createdAt: string;
   description: string;
   name: string;
+  startTime: string;
+  endTime: string;
 }
 
 export interface AddTodoType {

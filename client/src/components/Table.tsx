@@ -40,6 +40,7 @@ export function TableDemo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filteredTodos = handleFilterSearch(todos, searchResult);
+  console.log(todos);
 
   useEffect(() => {
     if (data) setTodos(data.getTodos), setSecTodos(data.getTodos);
@@ -130,8 +131,8 @@ export function TableDemo() {
                 </TableCell>
                 <TableCell>{`${todo.completed}`}</TableCell>
                 <TableCell>{todo.description}</TableCell>
-                <TableCell className="text-left">{todo.createdAt}</TableCell>
-                <TableCell className="text-left">{todo.createdAt}</TableCell>
+                <TableCell className="text-left">{todo.startTime}</TableCell>
+                <TableCell className="text-left">{todo.endTime}</TableCell>
 
                 <TableCell
                   className="text-left text-red-500 cursor-pointer"
