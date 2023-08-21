@@ -14,6 +14,7 @@ export const GET_TODOS_QUERY = gql`
 export const CREATE_TODO = gql`
   mutation Mutation($todoInput: TodoInput) {
     createTodo(todoInput: $todoInput) {
+      id
       completed
       createdAt
       description

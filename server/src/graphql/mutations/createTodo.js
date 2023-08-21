@@ -11,8 +11,8 @@ export const createTodo = {
     });
     const res = await createTodo.save();
     return {
-      id: res.id,
       ...res._doc,
+      id: res._id,
     };
   },
 };

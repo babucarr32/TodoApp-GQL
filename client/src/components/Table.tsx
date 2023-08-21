@@ -67,6 +67,8 @@ export function TableDemo() {
 
   const handleChecked = async (id: string, status: boolean, cb: Function) => {
     const result = todos.find((todo) => todo.id == id);
+    console.log(result);
+
     if (result) {
       const result2 = { ...result };
       result2.completed = !status;
@@ -105,7 +107,8 @@ export function TableDemo() {
               <TableHead className="w-[100px] p-5">Check</TableHead>
               <TableHead className="text-left">Status</TableHead>
               <TableHead>Todo</TableHead>
-              <TableHead className="text-left">Time</TableHead>
+              <TableHead className="text-left">Start</TableHead>
+              <TableHead className="text-left">End</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -124,6 +127,8 @@ export function TableDemo() {
                 <TableCell>{`${todo.completed}`}</TableCell>
                 <TableCell>{todo.description}</TableCell>
                 <TableCell className="text-left">{todo.createdAt}</TableCell>
+                <TableCell className="text-left">{todo.createdAt}</TableCell>
+
                 <TableCell
                   className="text-left text-red-500 cursor-pointer"
                   onClick={() => {

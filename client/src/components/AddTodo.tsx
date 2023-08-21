@@ -5,6 +5,7 @@ import { useAtom } from "jotai";
 import {
   jotaiAddTodo,
   jotaiEditTodo,
+  jotaiSecTodo,
   jotaiTodo,
   jotaiTodoId,
 } from "../atoms/JotaiAtoms";
@@ -17,6 +18,7 @@ const AddTodo: React.FC = () => {
   const [isEditTodo, setIsEditing] = useAtom(jotaiEditTodo);
   const [todoId, setTodoId] = useAtom(jotaiTodoId);
   const [todos, setTodos] = useAtom(jotaiTodo);
+  const [, setSecTodos] = useAtom(jotaiSecTodo);
 
   const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newTodo = { ...todo };
@@ -58,6 +60,7 @@ const AddTodo: React.FC = () => {
     if (result) {
       const newTodos = [result.data.createTodo as Todo, ...todos];
       setTodos(newTodos);
+      setSecTodos(newTodos);
     }
   };
 
