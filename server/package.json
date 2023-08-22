@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "src/index",
+    "start": "./src/index",
     "dev": "nodemon src/index"
 
   },
