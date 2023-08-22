@@ -5,7 +5,7 @@ import { connectDB } from "../utils/connectDB.js";
 import express from "express";
 import GoogleStrategy from "passport-google-oidc";
 import passport from "passport";
-import session from "express-session"; // Import express-session
+import session from "express-session";
 import { SessionData } from "./utils/SessionData.js";
 import { StrategyData } from "./utils/StrategyData.js";
 import { handleGenerateToken } from "./utils/GenerateToken.js";
