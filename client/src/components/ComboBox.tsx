@@ -89,7 +89,7 @@ export function ComboboxDemo() {
         <PopoverContent className="w-[200px] bg-slate-900 shadow-xl flex flex-col items-center p-3 border-2 border-slate-950 rounded-lg">
           <Command>
             <CommandInput
-              placeholder="No framework..."
+              placeholder="None selected..."
               className="p-2 bg-transparent text-white outline-none"
             />
             <CommandEmpty className="text-white">
