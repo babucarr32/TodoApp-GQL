@@ -36,7 +36,7 @@ function App() {
         <Login />
       ) : (
         <div className="min-h-[100vh] relative flex items-center w-full justify-center bg-slate-900 p-5">
-          <div className="w-full md:w-[70%] overflow-scroll">
+          <div className="w-full md:w-[100%] lg:w-[90%] xl:w-[70%] overflow-scroll">
             <div className="  p-5 bg-slate-950 my-3 rounded-lg relative ">
               <div className="flex items-center justify-between">
                 <p className="text-[1.25em] md:text-[2em] font-extrabold text-center text-white">
