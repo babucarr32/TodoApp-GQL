@@ -1,4 +1,4 @@
-import Todo from "../../model/Todo";
+import Todo from "../../model/Todo.js";
 
 export const changeTodoStatus = {
   async changeStatus(_, { ID, completedInput: { completed } }) {

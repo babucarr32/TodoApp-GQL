@@ -1,4 +1,4 @@
-import { handleVerifyToken } from "../../utils/VerifyToken";
+import { handleVerifyToken } from "../../utils/VerifyToken.js";
 
 export const verifyJWTToken = {
   async verifyJWTToken(_, { token }) {
