@@ -1,6 +1,3 @@
-import { handleCreateUser } from "./actions/handleCreateUser.js";
-import Todo from "./model/Todo.js";
-import User from "./model/User.js";
 import { userResolver } from "./graphql/resolvers/userResolver.js";
 import { todoResolver } from "./graphql/resolvers/todoResolver.js";
 import { getTodosResolvers } from "./graphql/resolvers/getTodosResolvers.js";
@@ -9,7 +6,8 @@ import { loginUser } from "./graphql/mutations/loginUser.js";
 import { createTodo } from "./graphql/mutations/createTodo.js";
 import { deleteTodo } from "./graphql/mutations/deleteTodo.js";
 import { editTodo } from "./graphql/mutations/editTodo.js";
-import { handleVerifyToken } from "./utils/VerifyToken.js";
+import { changeTodoStatus } from "./graphql/mutations/changeTodoStatus.js";
+import { verifyJWTToken } from "./graphql/mutations/verifyJWTToken.js";
 
 const resolvers = {
   Query: {
@@ -23,15 +21,8 @@ const resolvers = {
     ...createTodo,
     ...deleteTodo,
     ...editTodo,
-    async changeStatus(_, { ID, completedInput: { completed } }) {
-      const wasUpdated = (
-        await Todo.updateOne({ _id: ID }, { completed: completed })
-      ).modifiedCount;
-      return wasUpdated;
-    },
-    async verifyJWTToken(_, { token }) {
-      return handleVerifyToken(token);
-    },
+    ...changeTodoStatus,
+    ...verifyJWTToken,
   },
 };
 

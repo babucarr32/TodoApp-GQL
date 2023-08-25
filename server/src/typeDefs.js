@@ -66,6 +66,7 @@ type Mutation{
     createTodo(todoInput: TodoInput): Todo!
     deleteTodo(ID: ID!): Boolean
     editTodo(ID: ID!, todoInput: TodoInput): Boolean
+    "Change the status of the todo"
     changeStatus(ID: ID!, completedInput:CompletedInput): Boolean
     verifyJWTToken(token: String): Boolean
 }
